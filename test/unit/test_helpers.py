@@ -7,7 +7,9 @@ class TestHelpers:
         'AWS_REGION': 'test_aws_region',
         'AWS_ACCESS_KEY_ID': 'test_aws_key_id',
         'AWS_SECRET_ACCESS_KEY': 'test_aws_secret_key',
-        'NYPL_CORE_OBJECTS_BASE_URL': 'https://example.com/'
+        'NYPL_CORE_OBJECTS_BASE_URL': 'https://example.com/',
+        'S3_BUCKET': 'bucket',
+        'S3_LOCATIONS_FILE': 'file'
     }
 
     @classmethod

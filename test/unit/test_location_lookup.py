@@ -1,5 +1,5 @@
 from lib.location_lookup import parse_params, build_location_info,\
-                                fetch_locations_and_respond
+                                fetch_locations
 from test.unit.test_helpers import TestHelpers
 
 from unittest.mock import patch
@@ -41,13 +41,13 @@ class TestLogic:
              'url': True,
              'location_codes': ['ma', 'sc', 'my']}
         assert parse_params({'fields': 'location,url',
-                           'location_codes': 'ma,sc,my'}) == \
+                             'location_codes': 'ma,sc,my'}) == \
             {'location': True,
              'hours': False,
              'url': True,
              'location_codes': ['ma', 'sc', 'my']}
         assert parse_params({'fields': 'location',
-                           'location_codes': 'ma,sc,my'}) == \
+                             'location_codes': 'ma,sc,my'}) == \
             {'location': True,
              'hours': False,
              'url': False,
@@ -60,10 +60,10 @@ class TestLogic:
 
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={})
-    def test_fetch_locations_and_respond_no_label(self, MockNyplCore):
+    def test_fetch_locations_no_label(self, MockNyplCore):
         params = {'fields': 'location,hours,url',
                             'location_codes': 'mab,sco,myq'}
-        assert fetch_locations_and_respond(params, s3_locations) == \
+        assert fetch_locations(params, s3_locations) == \
             {
                 'mab': [{
                     'code': 'ma*',
@@ -84,10 +84,10 @@ class TestLogic:
 
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label'})
-    def test_fetch_locations_and_respond(self, MockNyplCore):
+    def test_fetch_locations(self, MockNyplCore):
         params = {'fields': 'location,hours,url',
                             'location_codes': 'mab,sco,myq'}
-        assert fetch_locations_and_respond(params, s3_locations) == \
+        assert fetch_locations(params, s3_locations) == \
             {
                 'mab': [{
                     'code': 'ma*',
@@ -108,10 +108,10 @@ class TestLogic:
     
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label anyway'})
-    def test_fetch_locations_and_respond_code_not_in_s3(self, MockNyplCore):
+    def test_fetch_locations_code_not_in_s3(self, MockNyplCore):
         params = {'fields': 'location,hours,url',
                             'location_codes': 'xxx'}
-        assert fetch_locations_and_respond(params, s3_locations) == \
+        assert fetch_locations(params, s3_locations) == \
             {
                 'xxx': [{
                     'code': None,

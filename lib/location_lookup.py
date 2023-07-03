@@ -1,14 +1,7 @@
-import json
 import re
-
 
 import lib.nypl_core
 from errors import ParamError
-
-
-s3_locations = None
-initialized = False
-s3_client = None
 
 
 def parse_params(params):
@@ -29,7 +22,7 @@ def load_swagger_docs():
     return 'swag'
 
 
-def fetch_locations_and_respond(params, s3_locations):
+def fetch_locations(params, s3_locations):
     params = parse_params(params)
     get_url = params.get('url')
     location_codes = params.get('location_codes')
@@ -54,19 +47,10 @@ def build_location_info(get_url, location_code, s3_locations):
             # TODO: remove dependency on code property in DFE
             code = s3_code
             url = s3_url
-    # original implementation of this code returned an array of multiple 
+    # original implementation of this code returned an array of multiple
     # which the front end would then filter through. We now only return one,
     # correct location, but it has to be in an array due to original contract.
     location_info = {'code': code, 'label': label}
     if get_url:
         location_info['url'] = url
     return [location_info]
-
-
-def create_response(status_code=200, body=None):
-    return {
-        'statusCode': status_code,
-        'body': json.dumps(body),
-        'isBase64Encoded': False,
-        'headers': {'Content-type': 'application/json'}
-    }
