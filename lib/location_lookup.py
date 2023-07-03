@@ -1,6 +1,7 @@
 import re
 
 import lib.nypl_core
+from lib.logger import GlobalLogger
 from errors import ParamError
 
 
@@ -24,7 +25,7 @@ def load_swagger_docs():
 
 def fetch_locations(params, s3_locations):
     params = parse_params(params)
-    get_url = params.get('url')
+    get_url = True
     location_codes = params.get('location_codes')
     location_dict = {}
     for code in location_codes:
@@ -35,13 +36,19 @@ def fetch_locations(params, s3_locations):
 # returns s3 location code, location url, and location label for a
 # given sierra location code
 def build_location_info(get_url, location_code, s3_locations):
+    GlobalLogger.logger.info(
+        f'Accessing NYPL-core for location code: {location_code}')
     nypl_core_location_data = (lib.nypl_core
                                   .sierra_location_by_code(location_code))
+    if nypl_core_location_data is None:
+        GlobalLogger.logger.error(
+            f'No nypl core data returned for location code: {location_code}')
+        return []
     label = nypl_core_location_data.get('label')
     url = None
     code = None
     for s3_code, s3_url in s3_locations.items():
-        # turn xxx* into ^(xxx)*
+        # turn xxx* into ^(xxx)+
         regex = r'^(' + s3_code[0:-1] + ')+'
         if re.match(regex, location_code) is not None:
             # TODO: remove dependency on code property in DFE
