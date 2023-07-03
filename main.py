@@ -62,4 +62,3 @@ def create_response(status_code=200, body=None):
         'isBase64Encoded': False,
         'headers': {'Content-type': 'application/json'}
     }
-
