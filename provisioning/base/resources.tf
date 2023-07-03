@@ -29,8 +29,8 @@ resource "aws_s3_object" "uploaded_zip" {
 
 # Create the lambda:
 resource "aws_lambda_function" "lambda_instance" {
-  description   = "Serves endpoints relating to patron services"
-  function_name = "locations-service-${var.environment}"
+  description   = "Serves endpoints relating to locations services"
+  function_name = "LocationServices-${var.environment}"
   handler       = "main.handler"
   memory_size   = 128
   role          = "arn:aws:iam::946183545209:role/lambda-full-access"
