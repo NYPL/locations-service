@@ -5,6 +5,6 @@ class ParamError(Exception):
 
 
 class MissingEnvVar(Exception):
-    
+
     def __init__(self, var):
         self.message = 'Missing environment variable: ' + var

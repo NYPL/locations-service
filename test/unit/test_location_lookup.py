@@ -105,7 +105,7 @@ class TestLogic:
                     'label': 'label'
                 }]
             }
-    
+
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label anyway'})
     def test_fetch_locations_code_not_in_s3(self, MockNyplCore):

@@ -5,7 +5,7 @@ from test.unit.test_helpers import TestHelpers
 
 
 class TestMain:
-        
+
     @classmethod
     def setup_class(cls):
         TestHelpers.set_env_vars()
