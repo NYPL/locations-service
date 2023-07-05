@@ -13,11 +13,6 @@ variable "environment" {
   }
 }
 
-variable "vpc_config" {
-  type = map
-  description = "The name of the environment (qa, production)"
-}
-
 # Upload the zipped app to S3:
 resource "aws_s3_object" "uploaded_zip" {
   bucket = "nypl-travis-builds-${var.environment}"
@@ -44,10 +39,6 @@ resource "aws_lambda_function" "lambda_instance" {
   # Trigger pulling code from S3 when the zip has changed:
   source_code_hash = filebase64sha256("../../build/build.zip")
 
-  vpc_config {
-    subnet_ids         = var.vpc_config.subnet_ids
-    security_group_ids = var.vpc_config.security_group_ids
-  }
 
   # Load ENV vars from ./config/{environment}.env
   environment {
