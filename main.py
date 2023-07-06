@@ -6,7 +6,7 @@ from nypl_py_utils.classes.s3_client import S3Client
 from nypl_py_utils.functions.config_helper import load_env_file
 
 from lib.logger import GlobalLogger
-from errors import MissingEnvVar, ParamError
+from lib.errors import MissingEnvVar, ParamError
 from lib.location_lookup import fetch_locations, load_swagger_docs
 
 

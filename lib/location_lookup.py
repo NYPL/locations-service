@@ -2,7 +2,7 @@ import re
 
 import lib.nypl_core
 from lib.logger import GlobalLogger
-from errors import ParamError
+from lib.errors import ParamError
 
 
 def parse_params(params):
