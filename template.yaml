@@ -12,7 +12,7 @@ Resources:
       Environment:
         Variables:
           LOG_LEVEL: debug
-          ENVIRONMENT: local
+          ENVIRONMENT: qa
       Events:
         ApiPatronPath:
           Type: Api
