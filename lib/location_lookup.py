@@ -7,7 +7,7 @@ from lib.errors import ParamError
 
 def parse_params(params):
     location_codes = params.get('location_codes')
-    if location_codes is None:
+    if location_codes is None or location_codes == '':
         raise ParamError()
     fields = params.get('fields', '').split(',')
     return {
