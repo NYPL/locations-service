@@ -36,7 +36,7 @@ class TestLogic:
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={})
     def test_fetch_locations_no_label(self, MockNyplCore):
-        fields = ['location', 'hours', 'url']
+        fields = ['address', 'hours', 'url']
         location_codes = ['mab', 'sco', 'myq']
         assert fetch_locations(location_codes, fields, s3_locations) == \
             {
@@ -60,7 +60,7 @@ class TestLogic:
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label'})
     def test_fetch_locations(self, MockNyplCore):
-        fields = ['location', 'hours', 'url']
+        fields = ['address', 'hours', 'url']
         location_codes = ['mab', 'sco', 'myq']
         assert fetch_locations(location_codes, fields, s3_locations) == \
             {
@@ -84,7 +84,7 @@ class TestLogic:
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label anyway'})
     def test_fetch_locations_code_not_in_s3(self, MockNyplCore):
-        fields = ['location', 'hours', 'url']
+        fields = ['address', 'hours', 'url']
         location_codes = ['xxx']
         assert fetch_locations(location_codes, fields, s3_locations) == \
             {

@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from main import init, CACHE, S3Client
+from main import init, CACHE, S3Client, parse_fields
 from test.unit.test_helpers import TestHelpers
 
 
@@ -22,3 +22,11 @@ class TestMain:
                 assert CACHE.get('s3_locations') is None
                 init()
                 assert CACHE.get('s3_locations') == 'locations'
+
+    def test_parse_fields(self):
+        params = {'fields': 'url,hours,address'}
+        assert parse_fields(params) == ['url', 'hours', 'address']
+        params = {'fields': 'hours,address'}
+        assert parse_fields(params) == ['hours', 'address']
+        params = {}
+        assert parse_fields(params) == ['url']

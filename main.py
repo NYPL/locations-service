@@ -73,7 +73,7 @@ def create_response(status_code=200, body=None):
 
 def parse_fields(params):
     fields = params.get('fields')
-    if len(fields) == 0:
+    if fields is None or len(fields) == 0:
         # default to return url if no fields specified
         return ['url']
     else:
