@@ -22,6 +22,12 @@ def handler(event, context):
     path = event.get('path')
     method = event.get('httpMethod')
     params = event.get('queryStringParameters')
+    fields = parse_fields(params)
+    location_codes = params.get('location_codes')
+    if location_codes is None or location_codes == '':
+        raise ParamError()
+    else:
+        location_codes = location_codes.split(',')
     if method != 'GET':
         return create_response(501, 'LocationsService only implements GET \
 endpoints')
@@ -29,10 +35,11 @@ endpoints')
         load_swagger_docs()
     elif re.match(r'\S+/locations', path) is not None:
         try:
-            locations_data = fetch_locations(params, CACHE['s3_locations'])
+            locations_data = fetch_locations(
+                location_codes, fields, CACHE['s3_locations'])
             return create_response(200, locations_data)
         except ParamError:
-            return create_response(500,
+            return create_response(400,
                                    'No location codes provided')
         except Exception as e:
             logger.warn(f'Received error in fetch_locations_and_respond. \
@@ -62,3 +69,13 @@ def create_response(status_code=200, body=None):
         'isBase64Encoded': False,
         'headers': {'Content-type': 'application/json'}
     }
+
+
+def parse_fields(params):
+    fields = params.get('fields')
+    if len(fields) == 0:
+        # default to return url if no fields specified
+        return ['url']
+    else:
+        # otherwise, return provided fields
+        return fields.split(',')

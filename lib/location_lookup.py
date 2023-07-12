@@ -2,40 +2,22 @@ import re
 
 import lib.nypl_core
 from lib.logger import GlobalLogger
-from lib.errors import ParamError
-
-
-def parse_params(params):
-    location_codes = params.get('location_codes')
-    if location_codes is None or location_codes == '':
-        raise ParamError()
-    fields = params.get('fields', '').split(',')
-    return {
-        'location_codes': location_codes.split(','),
-        'hours': 'hours' in fields,
-        'location': 'location' in fields,
-        # default with no fields provided is url = True
-        'url': 'url' in fields or len(fields) == 0,
-    }
 
 
 def load_swagger_docs():
     return 'swag'
 
 
-def fetch_locations(params, s3_locations):
-    params = parse_params(params)
-    get_url = True
-    location_codes = params.get('location_codes')
+def fetch_locations(location_codes, fields, s3_locations):
     location_dict = {}
     for code in location_codes:
-        location_dict[code] = build_location_info(get_url, code, s3_locations)
+        location_dict[code] = build_location_info(code, fields, s3_locations)
     return location_dict
 
 
 # returns s3 location code, location url, and location label for a
 # given sierra location code
-def build_location_info(get_url, location_code, s3_locations):
+def build_location_info(location_code, fields, s3_locations):
     GlobalLogger.logger.info(
         f'Accessing NYPL-core for location code: {location_code}')
     nypl_core_location_data = (lib.nypl_core
@@ -54,10 +36,10 @@ def build_location_info(get_url, location_code, s3_locations):
             # TODO: remove dependency on code property in DFE
             code = s3_code
             url = s3_url
-    # original implementation of this code returned an array of multiple
+    # original implementation of this code returned an array of multiple codes
     # which the front end would then filter through. We now only return one,
     # correct location, but it has to be in an array due to original contract.
     location_info = {'code': code, 'label': label}
-    if get_url:
+    if 'url' in fields:
         location_info['url'] = url
     return [location_info]
