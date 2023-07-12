@@ -22,12 +22,7 @@ def handler(event, context):
     path = event.get('path')
     method = event.get('httpMethod')
     params = event.get('queryStringParameters')
-    fields = parse_fields(params)
-    location_codes = params.get('location_codes')
-    if location_codes is None or location_codes == '':
-        raise ParamError()
-    else:
-        location_codes = location_codes.split(',')
+    (location_codes, fields) = parse_params(params)
     if method != 'GET':
         return create_response(501, 'LocationsService only implements GET \
 endpoints')
@@ -71,11 +66,17 @@ def create_response(status_code=200, body=None):
     }
 
 
-def parse_fields(params):
+def parse_params(params):
     fields = params.get('fields')
     if fields is None or len(fields) == 0:
         # default to return url if no fields specified
-        return ['url']
+        fields = ['url']
     else:
         # otherwise, return provided fields
-        return fields.split(',')
+        fields = fields.split(',')
+    location_codes = params.get('location_codes')
+    if location_codes is None or location_codes == '':
+        raise ParamError()
+    else:
+        location_codes = location_codes.split(',')
+    return (location_codes, fields)
