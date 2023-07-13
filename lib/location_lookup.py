@@ -34,7 +34,7 @@ def build_location_info(location_code, fields, s3_locations):
         regex = r'^(' + s3_code[0:-1] + ')+'
         if re.match(regex, location_code) is not None:
             # TODO: remove dependency on code property in DFE
-            code = s3_code
+            code = location_code
             url = s3_url
     # original implementation of this code returned an array of multiple codes
     # which the front end would then filter through. We now only return one,
