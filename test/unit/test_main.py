@@ -1,6 +1,7 @@
 from unittest.mock import patch
+import json
 
-from main import init, CACHE, S3Client, parse_params
+from main import init, CACHE, S3Client, parse_params, load_swagger_docs
 from test.unit.test_helpers import TestHelpers
 
 
@@ -30,3 +31,9 @@ class TestMain:
         assert parse_params(params) == (['abc'], ['hours', 'address'])
         params = {"location_codes": 'abc'}
         assert parse_params(params) == (['abc'], ['url'])
+
+    def test_load_swagger_docs(self):
+        swagger_response = load_swagger_docs()
+        assert swagger_response['statusCode'] == 200
+        assert json.loads(swagger_response['body'])['swagger'] == \
+            '2.0'

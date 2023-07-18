@@ -86,7 +86,7 @@ def load_swagger_docs():
     try:
         with open('./swagger.json') as swagger_file:
             swagger_json = json.load(swagger_file)
-            create_response(200, swagger_json)
+            return create_response(200, swagger_json)
     except json.JSONDecodeError as e:
         logger.error('Failed to parse Swagger documentation')
         logger.debug(e.message)
