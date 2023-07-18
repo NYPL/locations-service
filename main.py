@@ -7,7 +7,7 @@ from nypl_py_utils.functions.config_helper import load_env_file
 
 from lib.logger import GlobalLogger
 from lib.errors import MissingEnvVar, ParamError
-from lib.location_lookup import fetch_locations, load_swagger_docs
+from lib.location_lookup import fetch_locations
 
 
 GlobalLogger.initialize_logger(__name__)
@@ -80,3 +80,18 @@ def parse_params(params):
     else:
         location_codes = location_codes.split(',')
     return (location_codes, fields)
+
+
+def load_swagger_docs():
+    try:
+        with open('./swagger.json') as swagger_file:
+            swagger_json = json.load(swagger_file)
+            create_response(200, swagger_json)
+    except json.JSONDecodeError as e:
+        logger.error('Failed to parse Swagger documentation')
+        logger.debug(e.message)
+        create_response(500, 'Unable to load Swagger docs from JSON')
+    except IOError as e:
+        logger.error('Unable to load swagger documentation from file')
+        logger.debug(e.message)
+        create_response(500, 'Unable to load Swagger docs from JSON')

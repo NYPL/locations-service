@@ -24,6 +24,13 @@
           "description": "Comma-separated list of locations codes",
           "required": true,
           "type": "string"
+        },
+        {
+          "name": "fields",
+          "in": "query",
+          "description": "Comma-separated list of url, address, and/or hours",
+          "required": false,
+          "type": "string"
         }],
         "responses": {
           "200": {
@@ -69,11 +76,11 @@
         },
         "code": {
           "type": "string",
-          "example": "Location code"
+          "example": "map99"
         },
         "label": {
           "type": "string",
-          "example": "Location label"
+          "example": "Schwarzman Building M2 - Art and Architecture Room 300"
         }
       }
     },
