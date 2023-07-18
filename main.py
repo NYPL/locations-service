@@ -2,18 +2,15 @@ import os
 import json
 import re
 
-from nypl_py_utils.classes.s3_client import S3Client
 from nypl_py_utils.functions.config_helper import load_env_file
 
 from lib.logger import GlobalLogger
-from lib.errors import MissingEnvVar, ParamError
-from lib.location_lookup import fetch_locations
+from lib.errors import ParamError
+from lib.location_lookup import fetch_locations, init
 
 
 GlobalLogger.initialize_logger(__name__)
 logger = GlobalLogger.logger
-
-CACHE = {}
 
 
 def handler(event, context):
@@ -43,18 +40,6 @@ Message: {e.message}')
                                    'Failed to fetch locations by code.')
     else:
         return create_response(404, "#{path} not found")
-
-
-def init():
-    if CACHE.get('s3_locations') is None:
-        bucket = os.environ.get('S3_BUCKET')
-        resource = os.environ.get('S3_LOCATIONS_FILE')
-        if bucket is None:
-            raise MissingEnvVar('S3_BUCKET')
-        if resource is None:
-            raise MissingEnvVar('S3_LOCATIONS_FILE')
-        s3_client = S3Client(bucket, resource)
-        CACHE['s3_locations'] = s3_client.fetch_cache()
 
 
 def create_response(status_code=200, body=None):
