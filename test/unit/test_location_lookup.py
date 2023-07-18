@@ -26,9 +26,9 @@ class TestLogic:
            return_value={'label': 'label'})
     def test_build_location_info(self, MockNyplCore):
         assert build_location_info('lol99', ['url'], s3_locations) \
-            == [{'code': 'lo*', 'url': 'url.com', 'label': 'label'}]
+            == [{'code': 'lol99', 'label': 'label', 'url': 'url.com'}]
         assert build_location_info('lol99', ['hours'], s3_locations) \
-            == [{'code': 'lo*', 'label': 'label'}]
+            == [{'code': 'lol99', 'label': 'label'}]
         # ensure xma99 does not match ma
         assert build_location_info('xma99', ['hours'], s3_locations) \
             == [{'code': None, 'label': 'label'}]
@@ -41,17 +41,17 @@ class TestLogic:
         assert fetch_locations(location_codes, fields, s3_locations) == \
             {
                 'mab': [{
-                    'code': 'ma*',
+                    'code': 'mab',
                     'url': 'sasb.com',
                     'label': None
                 }],
                 'sco': [{
-                    'code': 'sc*',
+                    'code': 'sco',
                     'url': 'schom.com',
                     'label': None
                 }],
                 'myq': [{
-                    'code': 'my*',
+                    'code': 'myq',
                     'url': 'lpa.com',
                     'label': None
                 }]
@@ -65,17 +65,17 @@ class TestLogic:
         assert fetch_locations(location_codes, fields, s3_locations) == \
             {
                 'mab': [{
-                    'code': 'ma*',
+                    'code': 'mab',
                     'url': 'sasb.com',
                     'label': 'label'
                 }],
                 'sco': [{
-                    'code': 'sc*',
+                    'code': 'sco',
                     'url': 'schom.com',
                     'label': 'label'
                 }],
                 'myq': [{
-                    'code': 'my*',
+                    'code': 'myq',
                     'url': 'lpa.com',
                     'label': 'label'
                 }]

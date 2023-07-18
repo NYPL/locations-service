@@ -4,10 +4,6 @@ import lib.nypl_core
 from lib.logger import GlobalLogger
 
 
-def load_swagger_docs():
-    return 'swag'
-
-
 def fetch_locations(location_codes, fields, s3_locations):
     location_dict = {}
     for code in location_codes:
