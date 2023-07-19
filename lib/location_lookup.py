@@ -7,8 +7,6 @@ import lib.nypl_core
 from lib.logger import GlobalLogger
 from lib.errors import MissingEnvVar
 
-# I think a s3_locations of s3 location data belongs in location_lookup.py. You can move your init() method in there and call init() at the start of all calls to fetch_locations. That would mean you don't have to pass the cached dict into fetch_locations, allowing cached location data to be an internal implementation concern to "location_lookup". (Allowing main.py to focus solely on request interpretation concerns.)
-
 CACHE = {}
 
 
@@ -22,7 +20,6 @@ def init():
             raise MissingEnvVar('S3_LOCATIONS_FILE')
         s3_client = S3Client(bucket, resource)
         CACHE['s3_locations'] = s3_client.fetch_cache()
-        print(CACHE['s3_locations'])
 
 
 def fetch_locations(location_codes, fields):
@@ -46,7 +43,6 @@ def build_location_info(location_code, fields):
     label = nypl_core_location_data.get('label')
     url = None
     code = None
-    print(CACHE.get('s3_locations'))
     for s3_code, s3_url in CACHE.get('s3_locations').items():
         # turn xxx* into ^(xxx)+
         regex = r'^(' + s3_code[0:-1] + ')+'

@@ -9,6 +9,8 @@ s3_locations = {'lo*': 'url.com',
                 'ma*': 'sasb.com',
                 'sc*': 'schom.com',
                 'my*': 'lpa.com'}
+
+
 class TestLogic:
     @classmethod
     def setup_class(cls):
