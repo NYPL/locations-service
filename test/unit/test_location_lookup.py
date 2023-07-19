@@ -1,5 +1,5 @@
-from lib.location_lookup import parse_params, build_location_info,\
-                                fetch_locations
+from lib.location_lookup import build_location_info,\
+    fetch_locations, init, CACHE, S3Client
 from test.unit.test_helpers import TestHelpers
 
 from unittest.mock import patch
@@ -22,100 +22,86 @@ class TestLogic:
         TestHelpers.clear_env_vars()
         TestHelpers.tear_down()
 
+    def test_init_sets_s3_locations(self):
+        with patch.object(S3Client, '__init__', lambda s, b, r: None):
+            with patch.object(S3Client, 'fetch_cache', lambda p: s3_locations):
+                assert CACHE.get('s3_locations') is None
+                init()
+                assert CACHE.get('s3_locations') == s3_locations
+
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label'})
     def test_build_location_info(self, MockNyplCore):
-        assert build_location_info(True, 'lol99', s3_locations) \
-            == [{'code': 'lo*', 'url': 'url.com', 'label': 'label'}]
-        assert build_location_info(False, 'lol99', s3_locations) \
-            == [{'code': 'lo*', 'label': 'label'}]
+        CACHE['s3_locations'] = s3_locations
+        assert build_location_info('lol99', ['url']) \
+            == [{'code': 'lol99', 'label': 'label', 'url': 'url.com'}]
+        assert build_location_info('lol99', ['hours']) \
+            == [{'code': 'lol99', 'label': 'label'}]
         # ensure xma99 does not match ma
-        assert build_location_info(False, 'xma99', s3_locations) \
+        assert build_location_info('xma99', ['hours']) \
             == [{'code': None, 'label': 'label'}]
-
-    def test_parse_params(self):
-        assert parse_params({'fields': 'location,hours,url',
-                             'location_codes': 'ma,sc,my'}) == \
-            {'location': True,
-             'hours': True,
-             'url': True,
-             'location_codes': ['ma', 'sc', 'my']}
-        assert parse_params({'fields': 'location,url',
-                             'location_codes': 'ma,sc,my'}) == \
-            {'location': True,
-             'hours': False,
-             'url': True,
-             'location_codes': ['ma', 'sc', 'my']}
-        assert parse_params({'fields': 'location',
-                             'location_codes': 'ma,sc,my'}) == \
-            {'location': True,
-             'hours': False,
-             'url': False,
-             'location_codes': ['ma', 'sc', 'my']}
-        assert parse_params({'location_codes': 'ma,sc,my'}) == \
-            {'location': False,
-             'hours': False,
-             'url': False,
-             'location_codes': ['ma', 'sc', 'my']}
 
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={})
     def test_fetch_locations_no_label(self, MockNyplCore):
-        params = {'fields': 'location,hours,url',
-                            'location_codes': 'mab,sco,myq'}
-        assert fetch_locations(params, s3_locations) == \
+        CACHE['s3_locations'] = s3_locations
+        fields = ['address', 'hours', 'url']
+        location_codes = ['mab', 'sco', 'myq']
+        assert fetch_locations(location_codes, fields) == \
             {
                 'mab': [{
-                    'code': 'ma*',
+                    'code': 'mab',
                     'url': 'sasb.com',
                     'label': None
                 }],
                 'sco': [{
-                    'code': 'sc*',
+                    'code': 'sco',
                     'url': 'schom.com',
                     'label': None
                 }],
                 'myq': [{
-                    'code': 'my*',
+                    'code': 'myq',
                     'url': 'lpa.com',
                     'label': None
                 }]
-            }
+        }
 
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label'})
     def test_fetch_locations(self, MockNyplCore):
-        params = {'fields': 'location,hours,url',
-                            'location_codes': 'mab,sco,myq'}
-        assert fetch_locations(params, s3_locations) == \
+        CACHE['s3_locations'] = s3_locations
+        fields = ['address', 'hours', 'url']
+        location_codes = ['mab', 'sco', 'myq']
+        assert fetch_locations(location_codes, fields) == \
             {
                 'mab': [{
-                    'code': 'ma*',
+                    'code': 'mab',
                     'url': 'sasb.com',
                     'label': 'label'
                 }],
                 'sco': [{
-                    'code': 'sc*',
+                    'code': 'sco',
                     'url': 'schom.com',
                     'label': 'label'
                 }],
                 'myq': [{
-                    'code': 'my*',
+                    'code': 'myq',
                     'url': 'lpa.com',
                     'label': 'label'
                 }]
-            }
+        }
 
     @patch('lib.nypl_core.sierra_location_by_code',
            return_value={'label': 'label anyway'})
     def test_fetch_locations_code_not_in_s3(self, MockNyplCore):
-        params = {'fields': 'location,hours,url',
-                            'location_codes': 'xxx'}
-        assert fetch_locations(params, s3_locations) == \
+        CACHE['s3_locations'] = s3_locations
+        fields = ['address', 'hours', 'url']
+        location_codes = ['xxx']
+        assert fetch_locations(location_codes, fields) == \
             {
                 'xxx': [{
                     'code': None,
                     'url': None,
                     'label': 'label anyway'
                 }]
-            }
+        }

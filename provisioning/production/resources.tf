@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
   # Use s3 to store terraform state
   backend "s3" {
-    bucket  = "nypl-travis-builds-qa"
+    bucket  = "nypl-travis-builds-production"
     key     = "location-services-terraform-state"
     region  = "us-east-1"
   }
@@ -14,7 +14,7 @@ terraform {
 module "base" {
   source = "../base"
 
-  environment = "qa"
+  environment = "production"
 
   vpc_config = {
     subnet_ids         = ["subnet-21a3b244", "subnet-f35de0a9"]
