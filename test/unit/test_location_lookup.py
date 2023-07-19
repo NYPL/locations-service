@@ -105,4 +105,3 @@ class TestLogic:
                     'label': 'label anyway'
                 }]
         }
-

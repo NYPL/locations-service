@@ -28,7 +28,7 @@ endpoints')
     elif re.match(r'\S+/locations', path) is not None:
         try:
             locations_data = fetch_locations(
-                location_codes, fields, CACHE['s3_locations'])
+                location_codes, fields)
             return create_response(200, locations_data)
         except ParamError:
             return create_response(400,

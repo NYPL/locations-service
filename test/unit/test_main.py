@@ -1,4 +1,3 @@
-from unittest.mock import patch
 import json
 
 from main import parse_params, load_swagger_docs
