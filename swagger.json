@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v0.1.0",
+    "title": "Locations Service",
+    "description": "Service for retrieving locations data by code"
+  },
+  "host": "platform.nypl.org",
+  "basePath": "/api",
+  "schemes": ["http", "https"],
+  "tags": [{
+    "name": "locations",
+    "description": "Locations data retrieval service"
+  }],
+  "paths": {
+    "/v0.1/locations": {
+      "get": {
+        "tags": ["locations"],
+        "summary": "Retrieve locations data by code",
+        "description": "Returns the locations url associated with a list of codes",
+        "parameters": [{
+          "name": "location_codes",
+          "in": "query",
+          "description": "Comma-separated list of locations codes",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "fields",
+          "in": "query",
+          "description": "Comma-separated list of url, address, and/or hours",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "A json of locations codes pointing to data",
+            "schema": {
+              "$ref": "#/definitions/LocationsResponse"
+            }
+          },
+          "404": {
+            "description": "Resource not found/invalid path",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "400": {
+            "description": "No location codes provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "501": {
+            "description": "Invalid Method (Only GET requests valid)",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LocationsResponse": {
+      "properties": {
+        "url": {
+          "type": "string",
+          "example": "Location URL"
+        },
+        "code": {
+          "type": "string",
+          "example": "map99"
+        },
+        "label": {
+          "type": "string",
+          "example": "Schwarzman Building M2 - Art and Architecture Room 300"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
