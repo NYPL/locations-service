@@ -24,7 +24,7 @@ def handler(event, context):
     if path == '/docs/locations':
         load_swagger_docs()
     elif re.match(r'\S+/locations', path) is None:
-        return create_response(404, "#{path} not found")
+        return create_response(404, f"Path {path} not found")
     else:
         try:
             params = event.get('queryStringParameters')
