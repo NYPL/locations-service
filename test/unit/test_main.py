@@ -26,7 +26,7 @@ class TestMain:
         assert parse_params(params) == (['abc'], ['hours', 'address'])
         params = {"location_codes": 'abc'}
         assert parse_params(params) == (['abc'], ['url'])
-    
+
     def test_parse_param_error(self):
         with pytest.raises(ParamError):
             parse_params(None)
