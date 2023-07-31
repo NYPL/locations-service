@@ -6,7 +6,7 @@ from nypl_py_utils.functions.config_helper import load_env_file
 
 from lib.logger import GlobalLogger
 from lib.errors import ParamError
-from lib.location_lookup import fetch_locations, init
+from lib.location_lookup import fetch_locations
 
 
 GlobalLogger.initialize_logger(__name__)
@@ -15,14 +15,13 @@ logger = GlobalLogger.logger
 
 def handler(event, context):
     load_env_file(os.environ['ENVIRONMENT'], 'config/{}.yaml')
-    init()
     method = event.get('httpMethod')
     if method != 'GET':
         return create_response(501, 'LocationsService only implements GET \
             endpoints')
     path = event.get('path')
     if path == '/docs/locations':
-        load_swagger_docs()
+        return load_swagger_docs()
     elif re.match(r'\S+/locations', path) is None:
         return create_response(404, f"Path {path} not found")
     else:

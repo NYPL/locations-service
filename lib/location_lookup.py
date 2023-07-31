@@ -1,5 +1,6 @@
 import re
 import os
+import time
 
 from nypl_py_utils.classes.s3_client import S3Client
 
@@ -11,7 +12,11 @@ CACHE = {}
 
 
 def init():
-    if CACHE.get('s3_locations') is None:
+    s3 = CACHE.get('s3_locations', {})
+    now = time.time()
+    s3_cache_invalidated = s3.get('updated_at', now) - time.time() > 3600
+
+    if bool(s3) is False or s3_cache_invalidated:
         bucket = os.environ.get('S3_BUCKET')
         resource = os.environ.get('S3_LOCATIONS_FILE')
         if bucket is None:
@@ -20,9 +25,11 @@ def init():
             raise MissingEnvVar('S3_LOCATIONS_FILE')
         s3_client = S3Client(bucket, resource)
         CACHE['s3_locations'] = s3_client.fetch_cache()
+        CACHE['s3_locations']['updatedAt'] = time.time()
 
 
 def fetch_locations(location_codes, fields):
+    init()
     location_dict = {}
     for code in location_codes:
         location_dict[code] = build_location_info(code, fields)
