@@ -12,11 +12,10 @@ CACHE = {}
 
 
 def init():
-    s3 = CACHE.get('s3_locations', {})
     now = time.time()
-    s3_cache_invalidated = s3.get('updated_at', now) - time.time() > 3600
-
-    if bool(s3) is False or s3_cache_invalidated:
+    updated_at = CACHE.get('s3_locations_updated_at', now)
+    s3_cache_invalidated = time.time() - updated_at > 3600
+    if CACHE.get('s3_locations') is None or s3_cache_invalidated:
         bucket = os.environ.get('S3_BUCKET')
         resource = os.environ.get('S3_LOCATIONS_FILE')
         if bucket is None:
@@ -25,7 +24,7 @@ def init():
             raise MissingEnvVar('S3_LOCATIONS_FILE')
         s3_client = S3Client(bucket, resource)
         CACHE['s3_locations'] = s3_client.fetch_cache()
-        CACHE['s3_locations']['updatedAt'] = time.time()
+        CACHE['s3_locations_updated_at'] = time.time()
 
 
 def fetch_locations(location_codes, fields):
@@ -64,3 +63,13 @@ def build_location_info(location_code, fields):
     if 'url' in fields:
         location_info['url'] = url
     return [location_info]
+
+# these are used as convenvience functions for testing
+
+
+def _get_cache():
+    return CACHE
+
+
+def _set_cache(key, value):
+    CACHE[key] = value
