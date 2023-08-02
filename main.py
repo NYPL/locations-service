@@ -6,7 +6,7 @@ from nypl_py_utils.functions.config_helper import load_env_file
 
 from lib.logger import GlobalLogger
 from lib.errors import ParamError
-from lib.location_lookup import fetch_locations, init
+from lib.location_lookup import fetch_locations
 
 
 GlobalLogger.initialize_logger(__name__)
@@ -15,18 +15,19 @@ logger = GlobalLogger.logger
 
 def handler(event, context):
     load_env_file(os.environ['ENVIRONMENT'], 'config/{}.yaml')
-    init()
-    path = event.get('path')
     method = event.get('httpMethod')
-    params = event.get('queryStringParameters')
-    (location_codes, fields) = parse_params(params)
     if method != 'GET':
         return create_response(501, 'LocationsService only implements GET \
-endpoints')
+            endpoints')
+    path = event.get('path')
     if path == '/docs/locations':
-        load_swagger_docs()
-    elif re.match(r'\S+/locations', path) is not None:
+        return load_swagger_docs()
+    elif re.match(r'\S+/locations', path) is None:
+        return create_response(404, f"Path {path} not found")
+    else:
         try:
+            params = event.get('queryStringParameters')
+            (location_codes, fields) = parse_params(params)
             locations_data = fetch_locations(
                 location_codes, fields)
             return create_response(200, locations_data)
@@ -35,11 +36,9 @@ endpoints')
                                    'No location codes provided')
         except Exception as e:
             logger.warn(f'Received error in fetch_locations_and_respond. \
-Message: {e.message}')
+                            Message: {e.message}')
             return create_response(500,
                                    'Failed to fetch locations by code.')
-    else:
-        return create_response(404, "#{path} not found")
 
 
 def create_response(status_code=200, body=None):
@@ -52,19 +51,19 @@ def create_response(status_code=200, body=None):
 
 
 def parse_params(params):
-    fields = params.get('fields')
-    if fields is None or len(fields) == 0:
-        # default to return url if no fields specified
-        fields = ['url']
-    else:
-        # otherwise, return provided fields
-        fields = fields.split(',')
-    location_codes = params.get('location_codes')
-    if location_codes is None or location_codes == '':
-        raise ParamError()
-    else:
+    try:
+        fields = params.get('fields')
+        if fields is None or len(fields) == 0:
+            # default to return url if no fields specified
+            fields = ['url']
+        else:
+            # otherwise, return provided fields
+            fields = fields.split(',')
+        location_codes = params.get('location_codes')
         location_codes = location_codes.split(',')
-    return (location_codes, fields)
+        return (location_codes, fields)
+    except Exception:
+        raise ParamError
 
 
 def load_swagger_docs():
