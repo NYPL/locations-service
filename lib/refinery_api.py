@@ -27,18 +27,15 @@ class RefineryApi:
                     for {location}: {e}')
             try:
                 response = response.json()
-                self.locations_cache[location]['address'] = self.parse_address(
-                    response.get('location'))
-                # self.locations_cache[location]['hours'] = self.parse_hours(response.get('location').get(''))
+                return {
+                    'address': self.parse_address(response.get('location')),
+                    'hours': self.parse_hours(response.get('hours')),
+                    'updated_at': datetime.datetime.today()
+                }
             except (JSONDecodeError, KeyError) as e:
                 raise RefineryApiError(
                     f'Failed to parse Refinery API response: \
                         {type(e)} {e}')
-        return {
-            'address': self.parse_address(response.get('location')),
-            'hours': self.parse_hours(response.get('hours')),
-            'updated_at': datetime.datetime.today()
-        }
 
     def parse_address(self, data):
         parsed_data = {}
