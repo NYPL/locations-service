@@ -1,17 +1,19 @@
 import requests
 from requests.exceptions import JSONDecodeError, RequestException
-from datetime import datetime
+import datetime
+from functools import cache
 
 
 class RefineryApi:
     locations = ['schwarzman', 'lpa', 'schomburg']
     BASE_URL = "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/"
     locations_cache = {}
-    # this order is based on python's datetime.weekday() which returns 0 for 
+    # this order is based on python's datetime.weekday() which returns 0 for
     #   Monday and 6 for Sunday:
-    days_of_the_week = ['Monday' ,'Tuesday' ,'Wednesday' ,'Thursday' 'Friday' ,'Saturday', 'Sunday']
+    days_of_the_week = ['Monday', 'Tuesday', 'Wednesday',
+                        'Thursday', 'Friday', ' Saturday', 'Sunday']
 
-    def refresh_refinery_data(self):
+    def get_refinery_data(self):
         for location in self.locations:
             self.locations_cache[location] = {}
         for location in self.locations:
@@ -25,13 +27,18 @@ class RefineryApi:
                     for {location}: {e}')
             try:
                 response = response.json()
-                self.locations_cache[location]['address'] = self.parse_address(response.get('location'))
+                self.locations_cache[location]['address'] = self.parse_address(
+                    response.get('location'))
                 # self.locations_cache[location]['hours'] = self.parse_hours(response.get('location').get(''))
             except (JSONDecodeError, KeyError) as e:
                 raise RefineryApiError(
                     f'Failed to parse Refinery API response: \
                         {type(e)} {e}')
-        self.locations_cache['updated_at'] = datetime.today()
+        return {
+            'address': self.parse_address(response.get('location')),
+            'hours': self.parse_hours(response.get('hours')),
+            'updated_at': datetime.datetime.today()
+        }
 
     def parse_address(self, data):
         parsed_data = {}
@@ -49,7 +56,8 @@ class RefineryApi:
         if 'address' in fields:
             data['address'] = self.locations_cache.get(location).get('address')
         if 'hours' in fields:
-            data['hours'] = self.locations_cache.get(location).get('hours').get('regular')
+            data['hours'] = self.locations_cache.get(
+                location).get('hours').get('regular')
         return data
 
     @staticmethod
@@ -63,45 +71,56 @@ class RefineryApi:
             location = 'lpa'
         return location
 
-    # Expects an array of hashes representing open days of the branch. And a
-    # 3 letter day string trimmed from a time.asctime return value.
+    # Expects an array of hashes representing open days of the branch and a
+    # datetime object returned by datetime.datetime.today()
     # Returns an array of those days in order, rearranged to start with today
     @staticmethod
     def arrange_days(days_array, today):
-        # day is returned from refinery api as 'Mon.', eg
-        index_of_today = [day.get('day')[:-1] for day in days_array].index(today)
-
-        if index_of_today == 0:
-            return days_array
+        days_array_sunday_last = days_array[1:] + days_array[0]
+        # weekday returns 0-6 for Monday-Sunday
+        today_index = today.weekday()
+        if today_index == 0:
+            return days_array_sunday_last
         else:
             # reorder day objects so today is first in the array
-            return days_array[index_of_today:] + days_array[0:index_of_today]
+            return days_array_sunday_last[today_index:] + days_array_sunday_last[0:today_index]
 
-    # expects time - a string representing a 24hr clock time, and day - a 
+    # expects time - a string representing a 24hr clock time, and day - a
     # datetime object. Returns a new datetime object with the same date and
     # a new time attached
     @staticmethod
     def build_timestamp(time, day):
+        if time is None:
+            return None
         # extract 12 from '12:00'
         hour = int(time.split(':')[0])
-        return day.replace(hour=hour)
+        return day.replace(hour=hour).strfrtime('%Y-%m-%dT%X')
 
-    # start_time and end_time are strings representing 24 hour times: '10:00'
+    # refinery day is one element of the hours array returned by Refinery API
     # day is a datetime object
-    # index is an integer
-    @staticmethod
-    def build_hours_hash(self, start_time, end_time, day, index):
-        hours = {
-            'day': self.days_of_the_week[day.weekday()],
-            'startTime': RefineryApi.build_timestamp(start_time, day),
-            'endTime': RefineryApi.build_timestamp(end_time, day)
+    # i is an integer
+    def arranged_days_iterate(refinery_day, i, today):
+        day_for_index_i = today + datetime.timedelta(day=i)
+        return {
+            'day': RefineryApi.days_of_the_week[day_for_index_i.weekday()],
+            'startTime': RefineryApi.build_timestamp(refinery_day.get('open'), day_for_index_i),
+            'endTime': RefineryApi.build_timestamp(refinery_day.get('close'), day_for_index_i),
+            'today': True if i == 0 else None,
+            'nextBusinessDay': True if i == 1 else None
         }
-        hours['today'] = index == 0
-        hours['nextBusinessDay'] = index == 1
 
     @staticmethod
-    def build_hours_array(days_array, current_day):
-        today_weekday = current_day.weekday()
+    def build_hours_array(days_array, today):
+        # get the day of the week by human readable name
+        today_weekday = RefineryApi.days_of_the_week.index(today.weekday())
+        # arrange the hours per day array into an order starting with today_weekday
+        arranged_refinery_days = RefineryApi.arrange_days(
+            days_array, today_weekday)
+        # loop over that array, creating full timestamps for the start and
+        # endhours using as the first date. today is incremented by i
+        # (the current index) days for each iteration of the array.
+        return [RefineryApi.arranged_days_iterate(day, i, today)
+                for (i, day) in enumerate(arranged_refinery_days)]
 
 
 class RefineryApiError(Exception):
