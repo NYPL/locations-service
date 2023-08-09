@@ -71,20 +71,6 @@ class RefineryApi:
             location = 'lpa'
         return location
 
-    # Expects an array of hashes representing open days of the branch and a
-    # datetime object returned by datetime.datetime.today()
-    # Returns an array of those days in order, rearranged to start with today
-    @staticmethod
-    def arrange_days(days_array, today):
-        days_array_sunday_last = days_array[1:] + days_array[0]
-        # weekday returns 0-6 for Monday-Sunday
-        today_index = today.weekday()
-        if today_index == 0:
-            return days_array_sunday_last
-        else:
-            # reorder day objects so today is first in the array
-            return days_array_sunday_last[today_index:] + days_array_sunday_last[0:today_index]
-
     # expects time - a string representing a 24hr clock time, and day - a
     # datetime object. Returns a new datetime object with the same date and
     # a new time attached
@@ -94,35 +80,34 @@ class RefineryApi:
             return None
         # extract 12 from '12:00'
         hour = int(time.split(':')[0])
-        return day.replace(hour=hour).strfrtime('%Y-%m-%dT%X')
+        return day.replace(hour=hour).strftime('%Y-%m-%dT%X')
 
     # refinery day is one element of the hours array returned by Refinery API
     # today is a datetime object
     # i is an integer
-    def arranged_days_iterate(refinery_day, i, today):
-        i = 1
-        today.weekday = 3
-        day_for_index_i = today + datetime.timedelta(day=i)
+    def build_hours_hash(refinery_day, offset, today):
+        new_date = today + datetime.timedelta(days=offset)
         return {
-            'day': RefineryApi.days_of_the_week[day_for_index_i.weekday()],
-            'startTime': RefineryApi.build_timestamp(refinery_day.get('open'), day_for_index_i),
-            'endTime': RefineryApi.build_timestamp(refinery_day.get('close'), day_for_index_i),
-            'today': True if i == 0 else None,
-            'nextBusinessDay': True if i == 1 else None
+            'day': new_date.strftime('%A'),
+            'startTime': RefineryApi.build_timestamp(
+                refinery_day.get('open'), new_date),
+            'endTime': RefineryApi.build_timestamp(
+                refinery_day.get('close'), new_date),
+            'today': True if offset == 0 else None,
+            'nextBusinessDay': True if offset == 1 else None
         }
 
     @staticmethod
     def build_hours_array(days_array, today):
-        # get the day of the week by human readable name
-        today_weekday = RefineryApi.days_of_the_week.index(today.weekday())
-        # arrange the hours per day array into an order starting with today_weekday
-        arranged_refinery_days = RefineryApi.arrange_days(
-            days_array, today_weekday)
+        # put sunday
+        refinery_days_sunday_last = days_array[1:] + days_array[0:]
         # loop over that array, creating full timestamps for the start and
         # endhours using as the first date. today is incremented by i
         # (the current index) days for each iteration of the array.
-        return [RefineryApi.arranged_days_iterate(day, i, today)
-                for (i, day) in enumerate(arranged_refinery_days)]
+        for i in range(7):
+            offset = (7 + i - today.weekday()) % 7
+            print(RefineryApi.build_hours_hash(
+                refinery_days_sunday_last[i], offset, today))
 
 
 class RefineryApiError(Exception):
