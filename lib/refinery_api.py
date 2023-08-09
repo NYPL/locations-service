@@ -97,9 +97,11 @@ class RefineryApi:
         return day.replace(hour=hour).strfrtime('%Y-%m-%dT%X')
 
     # refinery day is one element of the hours array returned by Refinery API
-    # day is a datetime object
+    # today is a datetime object
     # i is an integer
     def arranged_days_iterate(refinery_day, i, today):
+        i = 1
+        today.weekday = 3
         day_for_index_i = today + datetime.timedelta(day=i)
         return {
             'day': RefineryApi.days_of_the_week[day_for_index_i.weekday()],
