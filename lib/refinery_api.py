@@ -4,7 +4,6 @@ import datetime
 from functools import cache
 
 
-@cache
 class RefineryApi:
     BASE_URL = "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/"
     # this order is based on python's datetime.weekday() which returns 0 for
@@ -18,7 +17,7 @@ class RefineryApi:
             response.raise_for_status()
             response = response.json()
             return {
-                'location_data': response,
+                'location_data': response.get('location'),
                 'updated_at': datetime.datetime.today()
             }
         except RequestException as e:
@@ -45,13 +44,24 @@ class RefineryApi:
     def get_refinery_data(code, fields):
         data = {}
         location = RefineryApi.determine_location(code)
-        resp = RefineryApi.fetch_location_data(location)
+        location_data = RefineryApi.check_cache_and_or_fetch_data(location)\
+            .get('location_data')
         if 'address' in fields:
-            data['address'] = RefineryApi.parse_address(resp)
+            data['address'] = RefineryApi.parse_address(location_data)
         if 'hours' in fields:
-            data['hours'] = RefineryApi.parse_hours(
-                resp.get('hours').get('regular'), datetime.datetime.today())
+            data['hours'] = RefineryApi.build_hours_array(
+                location_data.get('hours').get('regular'),
+                datetime.datetime.today())
         return data
+
+    @staticmethod
+    def check_cache_and_or_fetch_data(location):
+        location_data = RefineryApi.fetch_location_data(location)
+        delta = datetime.datetime.today() - location_data.get('updated_at')
+        if delta.seconds > 3600:
+            RefineryApi.fetch_location_data.cache_clear()
+            location_data = RefineryApi.fetch_location_data(location)
+        return location_data
 
     @staticmethod
     def determine_location(code):
