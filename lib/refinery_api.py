@@ -4,40 +4,34 @@ import datetime
 from functools import cache
 
 
+@cache
 class RefineryApi:
-    locations = ['schwarzman', 'lpa', 'schomburg']
     BASE_URL = "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/"
-    locations_cache = {}
     # this order is based on python's datetime.weekday() which returns 0 for
     #   Monday and 6 for Sunday:
-    days_of_the_week = ['Monday', 'Tuesday', 'Wednesday',
-                        'Thursday', 'Friday', ' Saturday', 'Sunday']
 
-    def get_refinery_data(self):
-        for location in self.locations:
-            self.locations_cache[location] = {}
-        for location in self.locations:
-            response = None
-            try:
-                response = requests.get(self.BASE_URL + location)
-                response.raise_for_status()
-            except RequestException as e:
-                raise RefineryApiError(
-                    f'Failed to retrieve Refinery API location data \
-                    for {location}: {e}')
-            try:
-                response = response.json()
-                return {
-                    'address': self.parse_address(response.get('location')),
-                    'hours': self.parse_hours(response.get('hours')),
-                    'updated_at': datetime.datetime.today()
-                }
-            except (JSONDecodeError, KeyError) as e:
-                raise RefineryApiError(
-                    f'Failed to parse Refinery API response: \
-                        {type(e)} {e}')
+    @cache
+    @staticmethod
+    def fetch_location_data(location):
+        try:
+            response = requests.get(RefineryApi.BASE_URL + location)
+            response.raise_for_status()
+            response = response.json()
+            return {
+                'location_data': response,
+                'updated_at': datetime.datetime.today()
+            }
+        except RequestException as e:
+            raise RefineryApiError(
+                f'Failed to retrieve Refinery API location data \
+                for {location}: {e}')
+        except (JSONDecodeError, KeyError) as e:
+            raise RefineryApiError(
+                f'Failed to parse Refinery API response: \
+                    {type(e)} {e}')
 
-    def parse_address(self, data):
+    @staticmethod
+    def parse_address(data):
         parsed_data = {}
         parsed_data['line1'] = data.get('street_address')
         parsed_data['city'] = data.get('locality')
@@ -47,14 +41,16 @@ class RefineryApi:
 
     # given an array of fields and a location code, return an dict populated
     # by those fields for that location code.
-    def attach_data(self, code, fields):
+    @staticmethod
+    def get_refinery_data(code, fields):
         data = {}
-        location = self.determine_location(code)
+        location = RefineryApi.determine_location(code)
+        resp = RefineryApi.fetch_location_data(location)
         if 'address' in fields:
-            data['address'] = self.locations_cache.get(location).get('address')
+            data['address'] = RefineryApi.parse_address(resp)
         if 'hours' in fields:
-            data['hours'] = self.locations_cache.get(
-                location).get('hours').get('regular')
+            data['hours'] = RefineryApi.parse_hours(
+                resp.get('hours').get('regular'), datetime.datetime.today())
         return data
 
     @staticmethod
@@ -69,8 +65,8 @@ class RefineryApi:
         return location
 
     # expects time - a string representing a 24hr clock time, and day - a
-    # datetime object. Returns a new datetime object with the same date and
-    # a new time attached
+    # datetime object. Returns a string representing day updated to a new time
+    # in format YYYY-MM-DDTHH:MM
     @staticmethod
     def build_timestamp(time, day):
         if time is None:
@@ -82,17 +78,21 @@ class RefineryApi:
     # refinery day is one element of the hours array returned by Refinery API
     # today is a datetime object
     # i is an integer
+    @staticmethod
     def build_hours_hash(refinery_day, offset, today):
         new_date = today + datetime.timedelta(days=offset)
-        return {
+        hours = {
             'day': new_date.strftime('%A'),
             'startTime': RefineryApi.build_timestamp(
                 refinery_day.get('open'), new_date),
             'endTime': RefineryApi.build_timestamp(
                 refinery_day.get('close'), new_date),
-            'today': True if offset == 0 else None,
-            'nextBusinessDay': True if offset == 1 else None
         }
+        if offset == 0:
+            hours['today'] = True
+        if offset == 1:
+            hours['nextBusinessDay'] = True
+        return hours
 
     @staticmethod
     def build_hours_array(days_array, today):
@@ -101,10 +101,12 @@ class RefineryApi:
         # loop over that array, creating full timestamps for the start and
         # endhours using as the first date. today is incremented by i
         # (the current index) days for each iteration of the array.
+        days_with_timestamp = []
         for i in range(7):
             offset = (7 + i - today.weekday()) % 7
-            print(RefineryApi.build_hours_hash(
+            days_with_timestamp.append(RefineryApi.build_hours_hash(
                 refinery_days_sunday_last[i], offset, today))
+        return days_with_timestamp
 
 
 class RefineryApiError(Exception):
