@@ -31,12 +31,12 @@ class RefineryApi:
 
     @staticmethod
     def parse_address(data):
-        parsed_data = {}
-        parsed_data['line1'] = data.get('street_address')
-        parsed_data['city'] = data.get('locality')
-        parsed_data['state'] = data.get('region')
-        parsed_data['postal_code'] = data.get('postal_code')
-        return parsed_data
+        return {
+            'line1': data.get('street_address'),
+            'city': data.get('locality'),
+            'state': data.get('region'),
+            'postal_code': data.get('postal_code')
+        }
 
     # given an array of fields and a location code, return an dict populated
     # by those fields for that location code.
@@ -72,6 +72,8 @@ class RefineryApi:
             location = 'schomburg'
         if code.startswith('pa'):
             location = 'lpa'
+        if location == '':
+            raise RefineryApiError('Unsupported location provided: ' + code)
         return location
 
     # expects time - a string representing a 24hr clock time, and day - a
@@ -87,7 +89,6 @@ class RefineryApi:
 
     # refinery day is one element of the hours array returned by Refinery API
     # today is a datetime object
-    # i is an integer
     @staticmethod
     def build_hours_hash(refinery_day, offset, today):
         new_date = today + datetime.timedelta(days=offset)
