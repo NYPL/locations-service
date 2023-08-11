@@ -1,4 +1,4 @@
-from lib.refinery_api import RefineryApi, requests
+from lib.refinery_api import RefineryApi
 from test.unit.test_helpers import TestHelpers
 
 import datetime
@@ -120,7 +120,8 @@ class TestRefineryApi:
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
             requests_mock.get(RefineryApi.BASE_URL + 'schwarzman',
-                              json=TestRefineryApi.fetch_data_success('schwarzman'))
+                              json=TestRefineryApi
+                              .fetch_data_success('schwarzman'))
             data = RefineryApi.get_refinery_data(
                 'mal82', ['address', 'hours'])
             assert data.get('hours') == \
