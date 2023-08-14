@@ -1,19 +1,20 @@
 import requests
-from requests.exceptions import JSONDecodeError, RequestException
+import os
 import datetime
+
+from requests.exceptions import JSONDecodeError, RequestException
 from functools import cache
+
+from nypl_py_utils.functions.config_helper import load_env_file
 
 
 class RefineryApi:
-    BASE_URL = "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/"
-    # this order is based on python's datetime.weekday() which returns 0 for
-    #   Monday and 6 for Sunday:
-
     @cache
     @staticmethod
     def fetch_location_data(location):
         try:
-            response = requests.get(RefineryApi.BASE_URL + location)
+            response = requests.get(
+                os.environ['REFINERY_API_BASE_URL'] + location)
             response.raise_for_status()
             response = response.json()
             return {

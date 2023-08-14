@@ -1,9 +1,11 @@
-from lib.refinery_api import RefineryApi
-from test.unit.test_helpers import TestHelpers
-
 import datetime
 import json
+import os
 from unittest.mock import patch
+
+from lib.refinery_api import RefineryApi
+from test.unit.test_helpers import TestHelpers
+from nypl_py_utils.functions.config_helper import load_env_file
 
 
 DAYS = [
@@ -104,7 +106,7 @@ class TestRefineryApi:
             PARSED_HOURS_ARRAY
 
     def test_fetch_location_data(self, requests_mock):
-        requests_mock.get(RefineryApi.BASE_URL + 'schomburg',
+        requests_mock.get(os.environ['REFINERY_API_BASE_URL'] + 'schomburg',
                           json=TestRefineryApi.fetch_data_success('schomburg'))
         data = RefineryApi.fetch_location_data('schomburg')
         data = RefineryApi.fetch_location_data('schomburg')
@@ -119,7 +121,7 @@ class TestRefineryApi:
                 datetime.datetime(2000, 1, 1)
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
-            requests_mock.get(RefineryApi.BASE_URL + 'schwarzman',
+            requests_mock.get(os.environ['REFINERY_API_BASE_URL'] + 'schwarzman',
                               json=TestRefineryApi
                               .fetch_data_success('schwarzman'))
             data = RefineryApi.get_refinery_data(
@@ -152,7 +154,7 @@ class TestRefineryApi:
 
     def test_get_refinery_data_invalidate_cache(self, requests_mock):
         requests_mock.get(
-            RefineryApi.BASE_URL + 'lpa',
+            os.environ['REFINERY_API_BASE_URL'] + 'lpa',
             json=TestRefineryApi.fetch_data_success('lpa'))
         with patch('lib.refinery_api.datetime') as mock_datetime:
             mock_datetime.datetime.today.side_effect = \
