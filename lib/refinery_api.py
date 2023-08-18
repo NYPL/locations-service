@@ -5,8 +5,6 @@ import datetime
 from requests.exceptions import JSONDecodeError, RequestException
 from functools import cache
 
-from nypl_py_utils.functions.config_helper import load_env_file
-
 
 class RefineryApi:
     @cache
