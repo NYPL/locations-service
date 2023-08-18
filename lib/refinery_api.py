@@ -47,8 +47,8 @@ class RefineryApi:
         location = RefineryApi.determine_location(code)
         location_data = RefineryApi.check_cache_and_or_fetch_data(location)\
             .get('location_data')
-        if 'address' in fields:
-            data['address'] = RefineryApi.parse_address(location_data)
+        if 'location' in fields:
+            data['location'] = RefineryApi.parse_address(location_data)
         if 'hours' in fields:
             data['hours'] = RefineryApi.build_hours_array(
                 location_data.get('hours').get('regular'),

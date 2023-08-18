@@ -125,7 +125,7 @@ class TestRefineryApi:
                               json=TestRefineryApi
                               .fetch_data_success('schwarzman'))
             data = RefineryApi.get_refinery_data(
-                'mal82', ['address', 'hours'])
+                'mal82', ['location', 'hours'])
             assert data.get('hours') == \
                 [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00',
                     'endTime': '2000-01-03T18:00:00'},
@@ -142,13 +142,13 @@ class TestRefineryApi:
                  {'day': 'Sunday', 'startTime': None, 'endTime': None,
                  'nextBusinessDay': True}]
 
-            assert data.get('address') == \
+            assert data.get('location') == \
                 {'city': 'New York',
                  'line1': 'Fifth Avenue and 42nd Street',
                  'postal_code': '10018',
                  'state': 'NY'}
 
-            RefineryApi.get_refinery_data('mal82', ['address', 'hours'])
+            RefineryApi.get_refinery_data('mal82', ['location', 'hours'])
             # cached data was accessed so only 1 api call
             assert requests_mock.call_count == 1
 
@@ -165,9 +165,9 @@ class TestRefineryApi:
                  datetime.datetime(2000, 1, 1, 12)]
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
-            RefineryApi.get_refinery_data('pal82', ['address'])
-            data = RefineryApi.get_refinery_data('pal82', ['address'])
-            assert data.get('address') == \
+            RefineryApi.get_refinery_data('pal82', ['location'])
+            data = RefineryApi.get_refinery_data('pal82', ['location'])
+            assert data.get('location') == \
                 {'city': 'New York',
                  'line1': '40 Lincoln Center Plaza (entrance at 111 Amsterdam \
 between 64th and 65th)',
