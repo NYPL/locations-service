@@ -20,9 +20,9 @@ class TestMain:
         TestHelpers.tear_down()
 
     def test_parse_params(self):
-        params = {'fields': 'url,hours,address', "location_codes": 'abc'}
+        params = {'fields': 'url,hours,location', "location_codes": 'abc'}
         assert parse_params(params) == (['abc'], ['url', 'hours', 'location'])
-        params = {'fields': 'hours,address', "location_codes": 'abc'}
+        params = {'fields': 'hours,location', "location_codes": 'abc'}
         assert parse_params(params) == (['abc'], ['hours', 'location'])
         params = {"location_codes": 'abc'}
         assert parse_params(params) == (['abc'], ['url'])
