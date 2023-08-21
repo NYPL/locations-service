@@ -80,4 +80,3 @@ def load_swagger_docs():
         logger.error('Unable to load swagger documentation from file')
         logger.debug(e.message)
         create_response(500, 'Unable to load Swagger docs from JSON')
-
