@@ -3,9 +3,9 @@ import json
 import os
 from unittest.mock import patch
 
-from lib.refinery_api import RefineryApi
+from lib.refinery_api import build_timestamp, get_refinery_data,\
+    fetch_location_data, build_hours_array
 from test.unit.test_helpers import TestHelpers
-from nypl_py_utils.functions.config_helper import load_env_file
 
 
 DAYS = [
@@ -93,23 +93,23 @@ class TestRefineryApi:
             return json.load(file)
 
     def test_build_timestamp(self):
-        assert (RefineryApi.build_timestamp(
+        assert (build_timestamp(
             '10:00', datetime.datetime(2000, 1, 1, 7))) == \
             '2000-01-01T10:00:00'
-        assert (RefineryApi.build_timestamp(
+        assert (build_timestamp(
             '7:00', datetime.datetime(2000, 1, 1, 1))) == \
             '2000-01-01T07:00:00'
 
     def test_build_hours_array(self):
-        assert RefineryApi.build_hours_array(
+        assert build_hours_array(
             DAYS, datetime.datetime(2000, 1, 1)) == \
             PARSED_HOURS_ARRAY
 
     def test_fetch_location_data(self, requests_mock):
         requests_mock.get(os.environ['REFINERY_API_BASE_URL'] + 'schomburg',
                           json=TestRefineryApi.fetch_data_success('schomburg'))
-        data = RefineryApi.fetch_location_data('schomburg')
-        data = RefineryApi.fetch_location_data('schomburg')
+        data = fetch_location_data('schomburg')
+        data = fetch_location_data('schomburg')
         assert type(data['updated_at']) is datetime.datetime
         assert type(data['location_data']) is dict
         # RefineryApi client returns cached values upon second request
@@ -121,10 +121,11 @@ class TestRefineryApi:
                 datetime.datetime(2000, 1, 1)
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
-            requests_mock.get(os.environ['REFINERY_API_BASE_URL'] + 'schwarzman',
+            requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
+                              'schwarzman',
                               json=TestRefineryApi
                               .fetch_data_success('schwarzman'))
-            data = RefineryApi.get_refinery_data(
+            data = get_refinery_data(
                 'mal82', ['location', 'hours'])
             assert data.get('hours') == \
                 [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00',
@@ -148,7 +149,7 @@ class TestRefineryApi:
                  'postal_code': '10018',
                  'state': 'NY'}
 
-            RefineryApi.get_refinery_data('mal82', ['location', 'hours'])
+            get_refinery_data('mal82', ['location', 'hours'])
             # cached data was accessed so only 1 api call
             assert requests_mock.call_count == 1
 
@@ -165,8 +166,8 @@ class TestRefineryApi:
                  datetime.datetime(2000, 1, 1, 12)]
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
-            RefineryApi.get_refinery_data('pal82', ['location'])
-            data = RefineryApi.get_refinery_data('pal82', ['location'])
+            get_refinery_data('pal82', ['location'])
+            data = get_refinery_data('pal82', ['location'])
             assert data.get('location') == \
                 {'city': 'New York',
                  'line1': '40 Lincoln Center Plaza (entrance at 111 Amsterdam \
