@@ -176,3 +176,6 @@ between 64th and 65th)',
                  'state': 'NY'}
             # cache was invalidated so two api calls should be made
             assert requests_mock.call_count == 2
+
+    def test_refinery_data_invalid_location(self):
+        assert get_refinery_data('xxx', ['location']) == {}

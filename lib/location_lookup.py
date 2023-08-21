@@ -67,8 +67,8 @@ def build_location_info(location_code, fields):
     location_info = {'code': code, 'label': label}
     if 'url' in fields:
         location_info['url'] = url
-    if 'location' in fields:
+    if 'location' in fields and refinery_data is not None:
         location_info['location'] = refinery_data.get('location')
-    if 'hours' in fields:
+    if 'hours' in fields and refinery_data is not None:
         location_info['hours'] = refinery_data.get('hours')
     return [location_info]

@@ -2,8 +2,15 @@ import requests
 import os
 import datetime
 
-from requests.exceptions import JSONDecodeError, RequestException
 from functools import cache
+from requests.exceptions import JSONDecodeError, RequestException
+
+from lib.logger import GlobalLogger
+from lib.errors import RefineryApiError
+
+
+GlobalLogger.initialize_logger(__name__)
+logger = GlobalLogger.logger
 
 
 @cache
@@ -40,9 +47,11 @@ def parse_address(data):
 #  code, return an dict populated
 # by those fields for that location code.
 def get_refinery_data(code, fields):
-    print('dataaa')
     data = {}
     location = determine_location(code)
+    if location is None:
+        return None
+    logger.debug(f'Checking cache for {location}')
     location_data = check_cache_and_or_fetch_data(location)\
         .get('location_data')
     if 'location' in fields:
@@ -59,21 +68,21 @@ def check_cache_and_or_fetch_data(location):
     delta = datetime.datetime.today() - location_data.get('updated_at')
     if delta.seconds > 3600:
         fetch_location_data.cache_clear()
+        logger.info('Refreshing Refinery API data for location: ' + location)
         location_data = fetch_location_data(location)
-
     return location_data
 
 
 def determine_location(code):
-    location = ''
+    location = None
     if code.startswith('ma'):
         location = 'schwarzman'
-    if code.startswith('sc'):
+    elif code.startswith('sc'):
         location = 'schomburg'
-    if code.startswith('pa'):
+    elif code.startswith('pa'):
         location = 'lpa'
-    if location == '':
-        raise RefineryApiError('Unsupported location provided: ' + code)
+    else:
+        logger.warning('Unsupported location provided: ' + code)
     return location
 
 
@@ -120,8 +129,3 @@ def build_hours_array(days_array, today):
         days_with_timestamp.append(build_hours_hash(
             refinery_days_sunday_last[i], offset, today))
     return days_with_timestamp
-
-
-class RefineryApiError(Exception):
-    def __init__(self, message=None):
-        self.message = message

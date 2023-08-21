@@ -6,7 +6,7 @@ It returns location labels and optionally urls, opening hours, and address for t
 ### Example valid endpoints
 `/locations?location_codes=map99&fields=hours`
 `/locations?location_codes=map99`
-`/locations?location_codes=map99,mao&fields=hours,url,address`
+`/locations?location_codes=map99,mao&fields=hours,url,location`
 
 ## Installation
 For development in OSX:

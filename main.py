@@ -36,9 +36,10 @@ def handler(event, context):
                                    'No location codes provided')
         except Exception as e:
             logger.warn(f'Received error in fetch_locations_and_respond. \
-                            Message: {e.message}')
+Message: {e}')
             return create_response(500,
-                                   'Failed to fetch locations by code.')
+                                   f'Failed to fetch locations \
+{location_codes} by code')
 
 
 def create_response(status_code=200, body=None):
@@ -79,3 +80,4 @@ def load_swagger_docs():
         logger.error('Unable to load swagger documentation from file')
         logger.debug(e.message)
         create_response(500, 'Unable to load Swagger docs from JSON')
+

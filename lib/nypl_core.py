@@ -25,7 +25,7 @@ def nypl_core_objects(name):
     except RequestException as e:
         raise NyplCoreObjectsError(
             'Failed to retrieve nypl-core-objects file from {url}: \
-                {errorType} {errorMessage}'
+{errorType} {errorMessage}'
             .format(url=url, errorType=type(e), errorMessage=e)) from None
 
     try:
@@ -34,7 +34,7 @@ def nypl_core_objects(name):
     except (JSONDecodeError, KeyError) as e:
         raise NyplCoreObjectsError(
             'Failed to parse nypl-core-objects file: \
-                {errorType} {errorMessage}'
+{errorType} {errorMessage}'
             .format(errorType=type(e), errorMessage=e)) from None
 
 
