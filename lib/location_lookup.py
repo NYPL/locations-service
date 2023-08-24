@@ -28,6 +28,7 @@ def check_cache_or_fetch_s3():
     updated_at = s3_data.get('updated_at')
     s3_cache_invalidated = time.time() - updated_at > 3600
     if s3_data.get('data') is None or s3_cache_invalidated:
+        fetch_s3.cache_clear()
         s3_data = fetch_s3()
     return s3_data.get('data')
 

@@ -178,4 +178,4 @@ between 64th and 65th)',
             assert requests_mock.call_count == 2
 
     def test_refinery_data_invalid_location(self):
-        assert get_refinery_data('xxx', ['location']) == {}
+        assert get_refinery_data('xxx', ['location']) is None
