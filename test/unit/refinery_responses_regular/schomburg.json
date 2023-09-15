@@ -1,0 +1,654 @@
+{
+  "location": {
+    "_links": {
+      "self": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg",
+        "about": "https://www.nypl.org/about/locations/"
+      },
+      "blogs": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg/blogs",
+        "all": "https://www.nypl.org/blog/library/64"
+      },
+      "events": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg/events",
+        "all": "https://www.nypl.org/events/calendar?location=64"
+      },
+      "exhibitions": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg/exhibitions"
+      },
+      "alerts": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg/alerts"
+      },
+      "amenities": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schomburg/amenities"
+      },
+      "projects": {
+        "href": "https://atlas.nypl.org/locations/schomburg"
+      }
+    },
+    "about": null,
+    "access": "Fully Accessible",
+    "accessibility_note": "",
+    "contacts": {
+      "phone": "(917) 275-6975"
+    },
+    "cross_street": null,
+    "floor": "",
+    "fundraising": {
+      "id": 276575,
+      "statement": "Stand with us.",
+      "appeal": "The Schomburg Center fights against those who try to distort or ignore Black history.",
+      "button_label": "Join Today",
+      "link": "https://secure.nypl.org/site/Donation2?7828.donation=form1&df_id=7828&mfc_pref=T&s_src=SCQXXZZ_QWLRB"
+    },
+    "geolocation": {
+      "type": "Point",
+      "coordinates": [
+        -73.941,
+        40.8144
+      ]
+    },
+    "hours": {
+      "regular": [
+        {
+          "day": "Sun.",
+          "open": null,
+          "close": null
+        },
+        {
+          "day": "Mon.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Tue.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Wed.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Thu.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Fri.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Sat.",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    "id": "SC",
+    "images": {
+      "exterior": "https://drupal.nypl.org/sites-drupal/default/files/2020-07/exterior_schomburg-3198_0.jpg",
+      "interior": "https://drupal.nypl.org/sites-drupal/default/files/2020-07/interior_schomburg-2787_0.jpg"
+    },
+    "locality": "New York",
+    "name": "Schomburg Center for Research in Black Culture",
+    "plan_your_visit": [
+      {
+        "label": "Tours",
+        "url": "https://www.nypl.org/events/tours/schomburg"
+      },
+      {
+        "label": "Plan Your Research Visit",
+        "url": "https://www.nypl.org/about/locations/using-the-library/plan-your-research-visit"
+      },
+      {
+        "label": "Using the Library",
+        "url": "https://www.nypl.org/about/locations/using-the-library"
+      },
+      {
+        "label": "Volunteer",
+        "url": "http://connect.nypl.org/site/Survey?ACTION_REQUIRED=URI_ACTION_USER_REQUESTS&SURVEY_ID=5900"
+      },
+      {
+        "label": "Get Our Newsletter",
+        "url": "http://pages.email.nypl.org/schomburgconnection"
+      }
+    ],
+    "postal_code": "10037",
+    "region": "NY",
+    "street_address": "515 Malcolm X Boulevard (135th St and Malcolm X Blvd)",
+    "slug": "schomburg",
+    "social_media": [
+      {
+        "site": "",
+        "href": "https://facebook.com/schomburgcenter"
+      },
+      {
+        "site": "",
+        "href": "https://instagram.com/schomburgcenter"
+      },
+      {
+        "site": "",
+        "href": "https://twitter.com/schomburgcenter"
+      }
+    ],
+    "synonyms": [],
+    "terms": [
+      {
+        "id": 20,
+        "uuid": "filter-accessibility",
+        "name": "Accessibility",
+        "terms": [
+          {
+            "id": 1000,
+            "uuid": "4f2f8b1b-dc71-4e66-9657-1c9fba52f3ff",
+            "name": "Fully accessible",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "uuid": "filter-borough",
+        "name": "Borough",
+        "terms": [
+          {
+            "id": 10000,
+            "uuid": "a9405ac3-6d14-4e2b-b8fa-bede59d231b5",
+            "name": "Manhattan",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 817186,
+        "uuid": "fa817186-d735-4a05-8b72-388d3b6c7a14",
+        "name": "Amenities",
+        "terms": [
+          {
+            "id": "357",
+            "uuid": "ef9e4a99-93c1-4b39-960d-43d252094203",
+            "name": "Computers for public use",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "384",
+            "uuid": "8cd362fe-782e-401f-9c14-9c877a0ef0a4",
+            "name": "Printers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "385",
+            "uuid": "cc4d9542-623d-4149-81a7-65dd3ae5880d",
+            "name": "Wireless internet (Wi-Fi)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "386",
+            "uuid": "3632b89a-e4a8-4ada-b55f-a74cf1c7d504",
+            "name": "Electric outlets available",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "394",
+            "uuid": "f57cebd1-a349-46ab-9d04-52885410a5c2",
+            "name": "Photocopiers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "395",
+            "uuid": "55d9a8f3-88b6-49ca-9ef0-1b3e0cf7e5d4",
+            "name": "Photocopiers (color)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "396",
+            "uuid": "ff839a2c-96fa-4451-8908-ab5ff8b392e0",
+            "name": "Document scanners",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "397",
+            "uuid": "5214df88-b586-4923-b29a-9a1309eba69c",
+            "name": "Photocopiers (large format)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "399",
+            "uuid": "419de68c-e803-466b-b2df-c5e7e7886636",
+            "name": "Public restrooms",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "409",
+            "uuid": "f07f2f9d-6a46-42f7-835b-88587db88b32",
+            "name": "Screen magnification (MAGic)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "410",
+            "uuid": "cdb05a7a-e544-4596-ac7d-d89b3d6e1870",
+            "name": "Screen reading (JAWS)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "411",
+            "uuid": "80777f9c-a97b-4caa-81c3-9229bd76bc0e",
+            "name": "Video magnifiers (CCTVs)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "396",
+            "uuid": "ff839a2c-96fa-4451-8908-ab5ff8b392e0",
+            "name": "Document scanners",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "405",
+            "uuid": "fd2e2ea6-fa8c-4350-adb4-358cb3fc0959",
+            "name": "Checkroom service",
+            "parent_uuid": "virtual"
+          }
+        ]
+      }
+    ],
+    "type": "research",
+    "_embedded": {
+      "amenities": [
+        {
+          "location_rank": 1,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "action": {
+                "name": "Reserve a PC",
+                "href": "http://pcreserve.nypl.org/"
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7964,
+            "name": "Computers for public use",
+            "rank": 1
+          }
+        },
+        {
+          "location_rank": 3,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/wireless-internet-access"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7967,
+            "name": "Wireless internet access (Wi-Fi)",
+            "rank": 2
+          }
+        },
+        {
+          "location_rank": 5,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7975,
+            "name": "Photocopiers (black/white)",
+            "rank": 5
+          }
+        },
+        {
+          "location_rank": 6,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7976,
+            "name": "Photocopiers (color)",
+            "rank": 6
+          }
+        },
+        {
+          "location_rank": 9,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7977,
+            "name": "Scanners",
+            "rank": 7
+          }
+        },
+        {
+          "location_rank": 2,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7966,
+            "name": "Printers (black/white)",
+            "rank": 11
+          }
+        },
+        {
+          "location_rank": 11,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7980,
+            "name": "Public restrooms",
+            "rank": 14
+          }
+        },
+        {
+          "location_rank": 12,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7990,
+            "name": "Screen magnification software (MAGic)",
+            "rank": 17
+          }
+        },
+        {
+          "location_rank": 13,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7991,
+            "name": "Screen reading software (JAWS)",
+            "rank": 18
+          }
+        },
+        {
+          "location_rank": 7,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/other-assistive-technologies"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7992,
+            "name": "Closed-circuit television enlargers (CCTVs)",
+            "rank": 25
+          }
+        },
+        {
+          "location_rank": 8,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7993,
+            "name": "Scanner/reading machines",
+            "rank": 27
+          }
+        },
+        {
+          "location_rank": 10,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7978,
+            "name": "Map photocopiers (up to 36\" wide)",
+            "rank": 30
+          }
+        },
+        {
+          "location_rank": 4,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Computer Services",
+            "id": 7968,
+            "name": "Electric outlets available",
+            "rank": 33
+          }
+        }
+      ],
+      "events": [
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/15/harlems-finest-maurice-hines-bring-them-back"
+            }
+          },
+          "body": "IN-PERSON\n\nNew York City born, Maurice Hines, is an accomplished Broadway entertainer with over 70 years in the entertainment industry. He is one of few African-Americans to have conceived, directed and choreographed two Broadway musicals, Hot Feet (2006) and Uptown...It\u2019s Hot! (1986); the latter earned him a TONY award nomination for Best Actor in a Musical. He began his career at age five, tap dancing alongside his younger brother, Gregory. As youngsters, the Hines Brothers traveled the world.\n\nMaurice's joie de vivre on and off stage made him a beloved friend and family member. Join us...",
+          "end": "2023-08-15T20:30:00-04:00",
+          "id": 681996,
+          "image": null,
+          "start": "2023-08-15T18:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Harlem's Finest | Maurice Hines: Bring Them Back"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/16/harlems-finest-althea-life-tennis-champion-althea-gibson"
+            }
+          },
+          "body": "IN-PERSON\n\nJoin us for a conversation with prize-winning former Boston Globe reporter Sally H. Jacobs, author of the latest biography Althea: The Life of Tennis Champion Althea Gibson and Katrina Adams, the first African American to lead the United States Tennis Association (USTA).. This book talk is part of a series of programs highlighting the cultural impact of some of Harlem's finest residents.\n\nGET THE BOOK | Copies of Althea: The Life of Tennis Champion Althea Gibson will be available for purchase from the Schomburg Shop in Harlem and online at SchomburgShop.com. Sally Jacobs will sign...",
+          "end": "2023-08-16T19:30:00-04:00",
+          "id": 682009,
+          "image": null,
+          "start": "2023-08-16T18:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Harlem's Finest | Althea: The Life of Tennis Champion Althea Gibson"
+        }
+      ],
+      "exhibitions": [
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/exhibitions/femmetography-gaze-shifted"
+            }
+          },
+          "body": "Open now & ongoing.\n\nIn this exhibition, Femmetography: The Gaze Shifted, the 2019 Teen Curators examine the Black feminine gaze using the first book documenting Black women photographers as a guide, Jeanne Moutoussamy-Ashe\u2019s 1985 opus, Viewfinders: Black Women Photographers. Moutoussamy-Ashe unravels the histories of these pioneering photographers and creates a space for their narratives to be discovered. As a new generation engages with this work, they wonder: what does the Black feminine gaze mean today? This fourth annual Teen Curators exhibition features portraiture, experimental...",
+          "end": "2050-06-12T16:45:59-05:00",
+          "id": 526609,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/exhibitions/a_hairstyle.2.jpg",
+          "start": "2019-06-11T18:00:00-04:00",
+          "title": "Femmetography: The Gaze Shifted"
+        }
+      ],
+      "features": [
+        {
+          "id": "275373",
+          "title": "Public Programs",
+          "body": "<p>The Schomburg Center advances knowledge of the global black experience through dynamic programs and exhibitions.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Screen Shot 2014-10-08 at 3.35.16 PM.png",
+          "weight": -10,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/schomburg"
+            }
+          }
+        },
+        {
+          "id": "275365",
+          "title": "Education, Institutes, and Fellowships",
+          "body": "The Schomburg Center serves learners from Pre-K to Ph.D., with its dynamic educational programs, institutes and fellowships.\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Screen Shot 2014-10-08 at 4.34.01 PM.png",
+          "weight": -9,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/schomburg/fellowships"
+            }
+          }
+        },
+        {
+          "id": "55392",
+          "title": "Digital Schomburg",
+          "body": "<p>Access exhibitions, podcasts, videos, books, images, and more about the global black experience 24/7.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/digschom.png",
+          "weight": -8,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/schomburg/digital-schomburg"
+            }
+          }
+        },
+        {
+          "id": "279442",
+          "title": "The Lapidus Center",
+          "body": "Learn more about the Center\u2014the only facility of its kind based in a public research library.\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Frederick Douglass 1248955_0.jpg",
+          "weight": -7,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/schomburg/lapidus-center"
+            }
+          }
+        },
+        {
+          "id": "65883",
+          "title": "Support the Schomburg",
+          "body": "<p>Schomburg Society members receive discounts, invitations to exclusive events, and more!</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Cover of Gen Brochure.png",
+          "weight": -6,
+          "_links": {
+            "self": {
+              "href": "https://secure3.convio.net/nypl/site/Donation2?7828.donation=form1&df_id=7828&mfc_pref=T&s_src=SCQXXZZ_QWLP"
+            }
+          }
+        },
+        {
+          "id": "65881",
+          "title": "Special Events and Space Rentals",
+          "body": "<p>Located in the heart of Harlem, the Schomburg Center is available for private events.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/lobby_0.jpg",
+          "weight": -5,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/spacerental/event-spaces/schomburg"
+            }
+          }
+        }
+      ],
+      "alerts": []
+    },
+    "open": true
+  },
+  "meta": {
+    "notices": {
+      "cache": {
+        "last-refresh": "2023-08-10T13:00:18-04:00"
+      }
+    }
+  }
+}

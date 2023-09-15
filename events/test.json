@@ -4,6 +4,7 @@
   "httpMethod": "GET",
   "isBase64Encoded": false,
   "queryStringParameters": {
-    "location_codes": "ag,al"
+    "location_codes": "ag,mac",
+    "fields": "url,hours"
   }
 }

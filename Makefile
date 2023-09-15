@@ -17,4 +17,4 @@ test-verbose:
 	pytest -v -r P
 
 lint:
-	flake8 --exclude *env,./.aws-sam/*
+	flake8 --exclude *env,.aws-sam/*
