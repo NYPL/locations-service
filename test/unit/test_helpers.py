@@ -9,7 +9,8 @@ class TestHelpers:
         'AWS_SECRET_ACCESS_KEY': 'test_aws_secret_key',
         'NYPL_CORE_OBJECTS_BASE_URL': 'https://example.com/',
         'S3_BUCKET': 'bucket',
-        'S3_LOCATIONS_FILE': 'file'
+        'S3_LOCATIONS_FILE': 'file',
+        'REFINERY_API_BASE_URL': 'https://refineryapi.net/'
     }
 
     @classmethod

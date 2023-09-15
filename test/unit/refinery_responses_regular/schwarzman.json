@@ -1,0 +1,836 @@
+{
+  "location": {
+    "_links": {
+      "self": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman",
+        "about": "https://www.nypl.org/about/locations/"
+      },
+      "blogs": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman/blogs",
+        "all": "https://www.nypl.org/blog/library/36"
+      },
+      "events": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman/events",
+        "all": "https://www.nypl.org/events/calendar?location=36"
+      },
+      "exhibitions": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman/exhibitions"
+      },
+      "alerts": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman/alerts"
+      },
+      "amenities": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/schwarzman/amenities"
+      },
+      "projects": {
+        "href": "https://atlas.nypl.org/locations/schwarzman"
+      }
+    },
+    "about": null,
+    "access": "Fully Accessible",
+    "accessibility_note": "",
+    "contacts": {
+      "phone": "9172756975"
+    },
+    "cross_street": null,
+    "floor": "",
+    "fundraising": {
+      "id": 275290,
+      "statement": "Friends of the Library can support their favorite library and receive great benefits!",
+      "appeal": "Become a Member",
+      "button_label": "Join or Renew",
+      "link": "https://secure.nypl.org/site/Donation2?7823.donation=form1&df_id=7823&mfc_pref=T&s_src=FRQXXZZ_QWLP"
+    },
+    "geolocation": {
+      "type": "Point",
+      "coordinates": [
+        -73.9808774,
+        40.7534887
+      ]
+    },
+    "hours": {
+      "regular": [
+        {
+          "day": "Sun.",
+          "open": null,
+          "close": null
+        },
+        {
+          "day": "Mon.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Tue.",
+          "open": "10:00",
+          "close": "20:00"
+        },
+        {
+          "day": "Wed.",
+          "open": "10:00",
+          "close": "20:00"
+        },
+        {
+          "day": "Thu.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Fri.",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "day": "Sat.",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    "id": "SASB",
+    "images": {
+      "exterior": "https://drupal.nypl.org/sites-drupal/default/files/2020-07/exterior_sasb.jpg",
+      "interior": "https://drupal.nypl.org/sites-drupal/default/files/2020-07/interior_sasb_0.jpg"
+    },
+    "locality": "New York",
+    "name": "Stephen A. Schwarzman Building",
+    "plan_your_visit": [
+      {
+        "label": "Visitor Guide",
+        "url": "https://www.nypl.org/about/locations/schwarzman/visitor-guide"
+      },
+      {
+        "label": "Tours",
+        "url": "https://www.nypl.org/events/tours/schwarzman"
+      },
+      {
+        "label": "Plan Your Research Visit",
+        "url": "https://www.nypl.org/about/locations/using-the-library/plan-your-research-visit"
+      },
+      {
+        "label": "Fellowships",
+        "url": "https://www.nypl.org/help/about-nypl/fellowships-institutes"
+      },
+      {
+        "label": "Research Study Rooms",
+        "url": "https://www.nypl.org/about/locations/schwarzman/research-study-rooms"
+      },
+      {
+        "label": "Space Rental",
+        "url": "https://www.nypl.org/spacerental/event-spaces/schwarzman"
+      }
+    ],
+    "postal_code": "10018",
+    "region": "NY",
+    "street_address": "Fifth Avenue and 42nd Street",
+    "slug": "schwarzman",
+    "social_media": [],
+    "synonyms": [],
+    "terms": [
+      {
+        "id": 20,
+        "uuid": "filter-accessibility",
+        "name": "Accessibility",
+        "terms": [
+          {
+            "id": 1000,
+            "uuid": "4f2f8b1b-dc71-4e66-9657-1c9fba52f3ff",
+            "name": "Fully accessible",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "uuid": "filter-borough",
+        "name": "Borough",
+        "terms": [
+          {
+            "id": 10000,
+            "uuid": "a9405ac3-6d14-4e2b-b8fa-bede59d231b5",
+            "name": "Manhattan",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 817186,
+        "uuid": "fa817186-d735-4a05-8b72-388d3b6c7a14",
+        "name": "Amenities",
+        "terms": [
+          {
+            "id": "356",
+            "uuid": "36ede755-b09e-48ae-b374-7dc08ece60db",
+            "name": "Laptops for public use",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "383",
+            "uuid": "44b1c959-4e92-4bd6-8165-37fae3fb269a",
+            "name": "Printers (color)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "384",
+            "uuid": "8cd362fe-782e-401f-9c14-9c877a0ef0a4",
+            "name": "Printers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "385",
+            "uuid": "cc4d9542-623d-4149-81a7-65dd3ae5880d",
+            "name": "Wireless internet (Wi-Fi)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "386",
+            "uuid": "3632b89a-e4a8-4ada-b55f-a74cf1c7d504",
+            "name": "Electric outlets available",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "388",
+            "uuid": "ec164baf-af02-4541-a8df-7c640b91bf1b",
+            "name": "Interlibrary loan",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "391",
+            "uuid": "ba4894dc-faad-49aa-a6b8-08b1ba1b96e6",
+            "name": "Book drop box (limited hours)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "394",
+            "uuid": "f57cebd1-a349-46ab-9d04-52885410a5c2",
+            "name": "Photocopiers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "395",
+            "uuid": "55d9a8f3-88b6-49ca-9ef0-1b3e0cf7e5d4",
+            "name": "Photocopiers (color)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "396",
+            "uuid": "ff839a2c-96fa-4451-8908-ab5ff8b392e0",
+            "name": "Document scanners",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "399",
+            "uuid": "419de68c-e803-466b-b2df-c5e7e7886636",
+            "name": "Public restrooms",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "405",
+            "uuid": "fd2e2ea6-fa8c-4350-adb4-358cb3fc0959",
+            "name": "Checkroom service",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "407",
+            "uuid": "4fa7e9e1-b6c6-4926-9fe9-9069ef00f892",
+            "name": "Changing station",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "408",
+            "uuid": "224861ba-9aad-4b48-953f-c28d8582fb7a",
+            "name": "Water fountain",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "409",
+            "uuid": "f07f2f9d-6a46-42f7-835b-88587db88b32",
+            "name": "Screen magnification (MAGic)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "410",
+            "uuid": "cdb05a7a-e544-4596-ac7d-d89b3d6e1870",
+            "name": "Screen reading (JAWS)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "411",
+            "uuid": "80777f9c-a97b-4caa-81c3-9229bd76bc0e",
+            "name": "Video magnifiers (CCTVs)",
+            "parent_uuid": "virtual"
+          }
+        ]
+      }
+    ],
+    "type": "research",
+    "_embedded": {
+      "amenities": [
+        {
+          "location_rank": 4,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/wireless-internet-access"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7967,
+            "name": "Wireless internet access (Wi-Fi)",
+            "rank": 2
+          }
+        },
+        {
+          "location_rank": 7,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7975,
+            "name": "Photocopiers (black/white)",
+            "rank": 5
+          }
+        },
+        {
+          "location_rank": 8,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7976,
+            "name": "Photocopiers (color)",
+            "rank": 6
+          }
+        },
+        {
+          "location_rank": 9,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7977,
+            "name": "Scanners",
+            "rank": 7
+          }
+        },
+        {
+          "location_rank": 14,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7988,
+            "name": "Changing station",
+            "rank": 9
+          }
+        },
+        {
+          "location_rank": 3,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7966,
+            "name": "Printers (black/white)",
+            "rank": 11
+          }
+        },
+        {
+          "location_rank": 11,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7980,
+            "name": "Public restrooms",
+            "rank": 14
+          }
+        },
+        {
+          "location_rank": 6,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/research-services/interlibrary-loan"
+              }
+            },
+            "category": "Circulation",
+            "id": 7969,
+            "name": "Interlibrary loan",
+            "rank": 16
+          }
+        },
+        {
+          "location_rank": 15,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7990,
+            "name": "Screen magnification software (MAGic)",
+            "rank": 17
+          }
+        },
+        {
+          "location_rank": 16,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7991,
+            "name": "Screen reading software (JAWS)",
+            "rank": 18
+          }
+        },
+        {
+          "location_rank": 1,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Computer Services",
+            "id": 7965,
+            "name": "Laptops for public use",
+            "rank": 20
+          }
+        },
+        {
+          "location_rank": 10,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Circulation",
+            "id": 7972,
+            "name": "Book drop box (limited hours)",
+            "rank": 21
+          }
+        },
+        {
+          "location_rank": 18,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/other-assistive-technologies"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7992,
+            "name": "Closed-circuit television enlargers (CCTVs)",
+            "rank": 25
+          }
+        },
+        {
+          "location_rank": 5,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Computer Services",
+            "id": 7968,
+            "name": "Electric outlets available",
+            "rank": 33
+          }
+        },
+        {
+          "location_rank": 12,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7986,
+            "name": "Checkroom service",
+            "rank": 34
+          }
+        },
+        {
+          "location_rank": 2,
+          "accessibility_note": "",
+          "accessible": false,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 8129,
+            "name": "Printers (color)",
+            "rank": 99999
+          }
+        },
+        {
+          "location_rank": 13,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7987,
+            "name": "Payphones",
+            "rank": 99999
+          }
+        },
+        {
+          "location_rank": 17,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7989,
+            "name": "Water fountain",
+            "rank": 99999
+          }
+        }
+      ],
+      "events": [
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/15/navigating-research-map-division"
+            }
+          },
+          "body": "Join us, as we show you how to navigate the collection at NYPL's Map Division. You will learn how maps can be utilized in your research and with other materials, how to navigate our catalogs to locate maps effectively, and how to search additional cartographic digital databases.\u00a0",
+          "end": "2023-08-15T14:00:00-04:00",
+          "id": 668439,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/lion-nypl-logo_0_0_4.jpeg",
+          "start": "2023-08-15T13:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Navigating Research at the Map Division"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/15/getting-started-stephen-schwarzman-building-0"
+            }
+          },
+          "body": "Whether\u00a0you're new to the Library or need a refresher, this hands-on, in-person class will teach you the basics of using all the resources the Stephen A. Schwarzman Building has to offer.",
+          "end": "2023-08-15T19:30:00-04:00",
+          "id": 670783,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/lion-nypl-logo_0.jpeg",
+          "registration": {
+            "type": "Online",
+            "start": "2023-05-01T15:00:00-04:00"
+          },
+          "start": "2023-08-15T18:30:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": " Getting Started at the Stephen A. Schwarzman Building"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/22/using-maps-research-armed-international-conflicts-nypl"
+            }
+          },
+          "body": "Join us, as we demonstrate how to use the collection at NYPL's Map Division to research international conflicts where the United States sent armed forces overseas for military action, starting in the 20th century. \u00a0These maps are a valuable resource that researchers can use to better understand their family's genealogy in relation to military history, to visualize military history, and to better understand how conflicts shape and change our world.",
+          "end": "2023-08-22T14:00:00-04:00",
+          "id": 668448,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/lion-nypl-logo_0_0_5.jpeg",
+          "start": "2023-08-22T13:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Using Maps to Research Armed International Conflicts at NYPL"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/23/researching-history-your-new-york-city-home"
+            }
+          },
+          "body": "This class will show you how to research the history a NYC building, and the people associated with it.\u00a0",
+          "end": "2023-08-23T14:00:00-04:00",
+          "id": 667589,
+          "image": null,
+          "start": "2023-08-23T13:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Researching the History of Your New York City Home"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/09/09/getting-started-genealogy-research"
+            }
+          },
+          "body": "Start your family history research online with librarians from The New York Public Library's Irma and Paul Milstein Division of United States History, Local History, and Genealogy, specialists in genealogy reference and instruction.",
+          "end": "2023-09-06T14:00:00-04:00",
+          "id": 680252,
+          "image": null,
+          "start": "2023-09-06T13:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Getting Started in Genealogy Research"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/09/12/navigating-research-map-division"
+            }
+          },
+          "body": "",
+          "end": "2023-09-12T18:00:00-04:00",
+          "id": 681353,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/lion-nypl-logo_0_0_3.jpeg",
+          "start": "2023-09-12T17:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Navigating Research at the Map Division"
+        }
+      ],
+      "exhibitions": [
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/exhibition/2009/05/31/jill-kupin-rose-gallery"
+            }
+          },
+          "body": "This ongoing exhibition consists of large wall panels with photographs, text, objects, and videos illustrating the history and the vast array of collections, services, and users of The New York Public Library's Branch and Research Libraries. The Jill Kupin Rose Gallery was created in 1998 by former New York Public Library Chairman Marshall Rose in memory of his late wife, Jill Kupin Rose.",
+          "end": null,
+          "id": 47968,
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/exhibitions/jill_rosegallery.jpg",
+          "start": "1998-01-01T00:00:00-05:00",
+          "title": "Jill Kupin Rose Gallery"
+        }
+      ],
+      "features": [
+        {
+          "id": "286595",
+          "title": "Visitor Guide",
+          "body": "<p>Learn about all the Schwarzman Building has to offer visitors from New York and beyond.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/librarylions.jpg",
+          "weight": -10,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/schwarzman/visitor-guide"
+            }
+          }
+        },
+        {
+          "id": "549588",
+          "title": "Center for Research in the Humanities",
+          "body": "<p>The Center encompasses four dedicated study rooms for researchers and a\u00a0programming space, the Lenox and Astor Room.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/sasb_2019_10_18_ribbon_cutting-04867.jpg",
+          "weight": -9,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/schwarzman/research-study-rooms"
+            }
+          }
+        },
+        {
+          "id": "273030",
+          "title": "The Library Shop",
+          "body": "<p>Purchases at the Library Shop\u00a0directly support the Library's invaluable programs and services.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/library shop photo.JPG",
+          "weight": -8,
+          "_links": {
+            "self": {
+              "href": "http://shop.nypl.org/"
+            }
+          }
+        },
+        {
+          "id": "273041",
+          "title": "LIVE from the NYPL",
+          "body": "<p>The Library's flagship ticketed event series offers programs as unique and engaging as the Library itself.\u00a0</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/live.jpg",
+          "weight": -7,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/live-nypl"
+            }
+          }
+        },
+        {
+          "id": "405007",
+          "title": "The Library After Hours",
+          "body": "<p>Join us on select Fridays for music, food and drinks, performances, and behind-the-scenes collections tours.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/17635507_1759900854339684_3222438612114751505_o.jpg",
+          "weight": -6,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/library-after-hours"
+            }
+          }
+        },
+        {
+          "id": "273048",
+          "title": "Cullman Center for Scholars & Writers",
+          "body": "<p>An international fellowship program open to people whose work will benefit directly from access to the collections.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/cullman.jpg",
+          "weight": -5,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/help/about-nypl/fellowships-institutes/center-for-scholars-and-writers"
+            }
+          }
+        }
+      ],
+      "alerts": [
+        {
+          "id": "1662",
+          "scope": "location",
+          "_links": {
+            "web": {
+              "href": ""
+            }
+          },
+          "msg": "<p>Please note that\u00a0the Stephen A. Schwarzman Building will be closed on Sundays throughout the summer. Regular Sunday hours will resume on Sunday, September 10.\u00a0</p>\n",
+          "extended_closing": null,
+          "display": {
+            "start": "2023-06-26T00:00:00-04:00",
+            "end": "2023-09-09T23:59:00-04:00"
+          }
+        }
+      ]
+    },
+    "open": true
+  },
+  "meta": {
+    "notices": {
+      "cache": {
+        "last-refresh": "2023-08-10T13:10:38-04:00"
+      }
+    }
+  }
+}

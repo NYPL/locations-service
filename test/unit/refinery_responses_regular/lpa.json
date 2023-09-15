@@ -1,0 +1,843 @@
+{
+  "location": {
+    "_links": {
+      "self": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa",
+        "about": "https://www.nypl.org/about/locations/"
+      },
+      "blogs": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa/blogs",
+        "all": "https://www.nypl.org/blog/library/55"
+      },
+      "events": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa/events",
+        "all": "https://www.nypl.org/events/calendar?location=55"
+      },
+      "exhibitions": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa/exhibitions"
+      },
+      "alerts": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa/alerts"
+      },
+      "amenities": {
+        "href": "https://refinery.nypl.org/api/nypl/locations/v1.0/locations/lpa/amenities"
+      },
+      "projects": {
+        "href": "https://atlas.nypl.org/locations/lpa"
+      }
+    },
+    "about": null,
+    "access": "Fully Accessible",
+    "accessibility_note": "",
+    "contacts": {
+      "phone": "917-275-6975 "
+    },
+    "cross_street": null,
+    "floor": "",
+    "fundraising": {
+      "id": 276576,
+      "statement": "Become a member & get great benefits!",
+      "appeal": "Artists and art lovers alike rely on the Library for the Performing Arts.",
+      "button_label": "Join Today",
+      "link": "https://secure.nypl.org/site/Donation2?7826.donation=form1&df_id=7826&mfc_pref=T&s_src=LPQXXZZ_QWLRB"
+    },
+    "geolocation": {
+      "type": "Point",
+      "coordinates": [
+        -73.9871336,
+        40.7731593
+      ]
+    },
+    "hours": {
+      "regular": [
+        {
+          "day": "Sun.",
+          "open": null,
+          "close": null
+        },
+        {
+          "day": "Mon.",
+          "open": "10:30",
+          "close": "20:00"
+        },
+        {
+          "day": "Tue.",
+          "open": "10:30",
+          "close": "18:00"
+        },
+        {
+          "day": "Wed.",
+          "open": "10:30",
+          "close": "18:00"
+        },
+        {
+          "day": "Thu.",
+          "open": "10:30",
+          "close": "20:00"
+        },
+        {
+          "day": "Fri.",
+          "open": "10:30",
+          "close": "18:00"
+        },
+        {
+          "day": "Sat.",
+          "open": "10:30",
+          "close": "18:00"
+        }
+      ]
+    },
+    "id": "LPA",
+    "images": {
+      "exterior": "https://drupal.nypl.org/sites-drupal/default/files/2020-07/exterior_lpa-9747.jpg"
+    },
+    "locality": "New York",
+    "name": "The New York Public Library for the Performing Arts",
+    "plan_your_visit": [
+      {
+        "label": "Katharine Cornell-Guthrie McClintic Special Collections Reading Room",
+        "url": "https://www.nypl.org/node/279792"
+      },
+      {
+        "label": "Requesting Archival Materials from the Library for the Performing Arts",
+        "url": "https://www.nypl.org/node/35709"
+      },
+      {
+        "label": "Performing Arts Collections",
+        "url": "https://www.nypl.org/about/locations/lpa/circulating-collections"
+      },
+      {
+        "label": "Using the Library",
+        "url": "https://www.nypl.org/about/locations/using-the-library"
+      },
+      {
+        "label": "Plan Your Research Visit",
+        "url": "https://www.nypl.org/about/locations/using-the-library/plan-your-research-visit"
+      },
+      {
+        "label": "Amy's Bread Caf\u00e9 at The New York Public Library",
+        "url": "https://www.nypl.org/node/320205"
+      }
+    ],
+    "postal_code": "10023",
+    "region": "NY",
+    "street_address": "40 Lincoln Center Plaza (entrance at 111 Amsterdam between 64th and 65th)",
+    "slug": "lpa",
+    "social_media": [
+      {
+        "site": "",
+        "href": "https://bit.ly/3Il5yi6"
+      },
+      {
+        "site": "",
+        "href": "https://bit.ly/3AjsUBS"
+      },
+      {
+        "site": "",
+        "href": "https://bit.ly/32jwfV0"
+      }
+    ],
+    "synonyms": [],
+    "terms": [
+      {
+        "id": 20,
+        "uuid": "filter-accessibility",
+        "name": "Accessibility",
+        "terms": [
+          {
+            "id": 1000,
+            "uuid": "4f2f8b1b-dc71-4e66-9657-1c9fba52f3ff",
+            "name": "Fully accessible",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "uuid": "filter-borough",
+        "name": "Borough",
+        "terms": [
+          {
+            "id": 10000,
+            "uuid": "a9405ac3-6d14-4e2b-b8fa-bede59d231b5",
+            "name": "Manhattan",
+            "parent_uuid": "virtual"
+          }
+        ]
+      },
+      {
+        "id": 817186,
+        "uuid": "fa817186-d735-4a05-8b72-388d3b6c7a14",
+        "name": "Amenities",
+        "terms": [
+          {
+            "id": "357",
+            "uuid": "ef9e4a99-93c1-4b39-960d-43d252094203",
+            "name": "Computers for public use",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "356",
+            "uuid": "36ede755-b09e-48ae-b374-7dc08ece60db",
+            "name": "Laptops for public use",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "384",
+            "uuid": "8cd362fe-782e-401f-9c14-9c877a0ef0a4",
+            "name": "Printers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "385",
+            "uuid": "cc4d9542-623d-4149-81a7-65dd3ae5880d",
+            "name": "Wireless internet (Wi-Fi)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "386",
+            "uuid": "3632b89a-e4a8-4ada-b55f-a74cf1c7d504",
+            "name": "Electric outlets available",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "388",
+            "uuid": "ec164baf-af02-4541-a8df-7c640b91bf1b",
+            "name": "Interlibrary loan",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "394",
+            "uuid": "f57cebd1-a349-46ab-9d04-52885410a5c2",
+            "name": "Photocopiers (black/white)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "395",
+            "uuid": "55d9a8f3-88b6-49ca-9ef0-1b3e0cf7e5d4",
+            "name": "Photocopiers (color)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "396",
+            "uuid": "ff839a2c-96fa-4451-8908-ab5ff8b392e0",
+            "name": "Document scanners",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "398",
+            "uuid": "e97d8fea-d724-4bd0-9d71-c2a0726cecf0",
+            "name": "Change machine",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "399",
+            "uuid": "419de68c-e803-466b-b2df-c5e7e7886636",
+            "name": "Public restrooms",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "403",
+            "uuid": "f11cab1f-e299-467d-9b04-0915472ff255",
+            "name": "Lost and found",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "404",
+            "uuid": "90153cb5-81fe-49cf-b181-2dc34dbafd34",
+            "name": "Bicycle rack",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "407",
+            "uuid": "4fa7e9e1-b6c6-4926-9fe9-9069ef00f892",
+            "name": "Changing station",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "408",
+            "uuid": "224861ba-9aad-4b48-953f-c28d8582fb7a",
+            "name": "Water fountain",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "409",
+            "uuid": "f07f2f9d-6a46-42f7-835b-88587db88b32",
+            "name": "Screen magnification (MAGic)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "410",
+            "uuid": "cdb05a7a-e544-4596-ac7d-d89b3d6e1870",
+            "name": "Screen reading (JAWS)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "411",
+            "uuid": "80777f9c-a97b-4caa-81c3-9229bd76bc0e",
+            "name": "Video magnifiers (CCTVs)",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "405",
+            "uuid": "fd2e2ea6-fa8c-4350-adb4-358cb3fc0959",
+            "name": "Checkroom service",
+            "parent_uuid": "virtual"
+          },
+          {
+            "id": "608",
+            "uuid": "e527a89a-46b8-4d8d-9b2b-e1462f2d2749",
+            "name": "DVD collection",
+            "parent_uuid": "virtual"
+          }
+        ]
+      }
+    ],
+    "type": "research",
+    "_embedded": {
+      "amenities": [
+        {
+          "location_rank": 1,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "action": {
+                "name": "Reserve a PC",
+                "href": "http://pcreserve.nypl.org/"
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7964,
+            "name": "Computers for public use",
+            "rank": 1
+          }
+        },
+        {
+          "location_rank": 4,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/wireless-internet-access"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7967,
+            "name": "Wireless internet access (Wi-Fi)",
+            "rank": 2
+          }
+        },
+        {
+          "location_rank": 7,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7975,
+            "name": "Photocopiers (black/white)",
+            "rank": 5
+          }
+        },
+        {
+          "location_rank": 8,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "",
+                "href": "https://www.nypl.org/about/locations/using-the-library/research-center-onsite-copies"
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7976,
+            "name": "Photocopiers (color)",
+            "rank": 6
+          }
+        },
+        {
+          "location_rank": 9,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7977,
+            "name": "Scanners",
+            "rank": 7
+          }
+        },
+        {
+          "location_rank": 14,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7988,
+            "name": "Changing station",
+            "rank": 9
+          }
+        },
+        {
+          "location_rank": 12,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7985,
+            "name": "Bicycle rack",
+            "rank": 10
+          }
+        },
+        {
+          "location_rank": 3,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/computers-internet-and-wireless-access/reserving-computer"
+              }
+            },
+            "category": "Computer Services",
+            "id": 7966,
+            "name": "Printers (black/white)",
+            "rank": 11
+          }
+        },
+        {
+          "location_rank": 10,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Printing and Copy Services",
+            "id": 7979,
+            "name": "Change machine",
+            "rank": 13
+          }
+        },
+        {
+          "location_rank": 13,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7980,
+            "name": "Public restrooms",
+            "rank": 14
+          }
+        },
+        {
+          "location_rank": 6,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/research-services/interlibrary-loan"
+              }
+            },
+            "category": "Circulation",
+            "id": 7969,
+            "name": "Interlibrary loan",
+            "rank": 16
+          }
+        },
+        {
+          "location_rank": 17,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7990,
+            "name": "Screen magnification software (MAGic)",
+            "rank": 17
+          }
+        },
+        {
+          "location_rank": 18,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/software"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7991,
+            "name": "Screen reading software (JAWS)",
+            "rank": 18
+          }
+        },
+        {
+          "location_rank": 2,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Computer Services",
+            "id": 7965,
+            "name": "Laptops for public use",
+            "rank": 20
+          }
+        },
+        {
+          "location_rank": 16,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              },
+              "info": {
+                "name": "Learn more",
+                "href": "https://www.nypl.org/help/community-outreach/services-for-persons-with-disabilities/assistive-technologies/other-assistive-technologies"
+              }
+            },
+            "category": "Assistive Technologies",
+            "id": 7992,
+            "name": "Closed-circuit television enlargers (CCTVs)",
+            "rank": 25
+          }
+        },
+        {
+          "location_rank": 11,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7984,
+            "name": "Lost and found",
+            "rank": 28
+          }
+        },
+        {
+          "location_rank": 5,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Computer Services",
+            "id": 7968,
+            "name": "Electric outlets available",
+            "rank": 33
+          }
+        },
+        {
+          "location_rank": 15,
+          "accessibility_note": "",
+          "accessible": true,
+          "staff_assistance": false,
+          "amenity": {
+            "_links": {
+              "self": {
+                "href": null
+              }
+            },
+            "category": "Facilities",
+            "id": 7989,
+            "name": "Water fountain",
+            "rank": 99999
+          }
+        }
+      ],
+      "events": [
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/11/sound-bites-outdoor-music-listening-sessions"
+            }
+          },
+          "body": "Music lovers: come listen to music selected from the archives of the Library for the Performing Arts' collection!\n\nSound Bites is a monthly outdoor listening event presented by the Music and Recorded Sound Division, on select Fridays on our terrace throughout the summer. Each event will feature staff or community DJs who will spin from the library's vast collection, and then talk about their digging process.\n\nIn this iteration, we hear from DJ Figgy Smalls who will play hip hop.",
+          "end": "2023-08-11T17:00:00-04:00",
+          "id": 671722,
+          "image": null,
+          "start": "2023-08-11T15:00:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Sound Bites: Outdoor Music Listening Sessions"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/14/ai-theatre-discussion-library-performing-arts"
+            }
+          },
+          "body": "THIS EVENT IS POSTPONED. We apologize for any inconvenience. Please check back for the rescheduled date. \n\t \n\nThe use of artificial intelligence (AI) is at the center of the negotiations currently underway in both the SAG-AFTRA and Screenwriters Guild strikes. But how will this new technology affect theatre, and how is it already affecting it?\n\nThe Library for the Performing Arts and Masie Productions invite you to an afternoon discussion of these issues at the Library at Lincoln Center. Moderators Doug Reside (curator of the Billy Rose Theatre Division) and Elliott Masie (Broadway Producer...",
+          "end": "2023-08-14T18:00:00-04:00",
+          "id": 682254,
+          "image": null,
+          "start": "2023-08-14T13:00:00-04:00",
+          "status": {
+            "status": false,
+            "label": "Postponed"
+          },
+          "title": "POSTPONED: AI & Theatre: A Discussion at The Library for the Performing Arts"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/15/outdoor-family-storytime"
+            }
+          },
+          "body": "The Library for the Performing Arts are teaming up with the Riverside Library to host their popular children's storytimes at our Outdoor Reading Room terrace. A Children's librarian will read stories, perform songs, and present other engaging activities with a focus on the performing arts. Bring your children ages 1 year old and up!\n\nDates: Twice every Tuesday at 10:30am and 11:15am from June 27 - August 29, 2023. \n\nInclement weather: In inclement weather, storytime will be canceled. Check this page for cancellation notices.",
+          "end": "2023-08-15T12:00:00-04:00",
+          "id": 677734,
+          "image": null,
+          "start": "2023-08-15T10:30:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Outdoor Family Storytime"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/01/outdoor-family-storytime-0"
+            }
+          },
+          "body": "The Library for the Performing Arts are teaming up with the Riverside Library to host their popular children's storytimes at our Outdoor Reading Room terrace. A Children's librarian will read stories, perform songs, and present other engaging activities with a focus on the performing arts. Bring your children ages 1 year old and up!\n\n\t\tDates: Twice every Tuesday at 10:30am and 11:15am from June 27 - August 29, 2023. \n\n\t\tInclement weather: In inclement weather, storytime will be canceled. Check this page for cancellation notices.",
+          "end": "2023-08-15T11:00:00-04:00",
+          "id": 678807,
+          "image": null,
+          "registration": {
+            "type": "First come, first served",
+            "start": null
+          },
+          "start": "2023-08-15T10:30:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Outdoor Family Storytime"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/01/outdoor-family-storytime-0"
+            }
+          },
+          "body": "The Library for the Performing Arts are teaming up with the Riverside Library to host their popular children's storytimes at our Outdoor Reading Room terrace. A Children's librarian will read stories, perform songs, and present other engaging activities with a focus on the performing arts. Bring your children ages 1 year old and up!\n\n\t\tDates: Twice every Tuesday at 10:30am and 11:15am from June 27 - August 29, 2023. \n\n\t\tInclement weather: In inclement weather, storytime will be canceled. Check this page for cancellation notices.",
+          "end": "2023-08-15T11:45:00-04:00",
+          "id": 678807,
+          "image": null,
+          "registration": {
+            "type": "First come, first served",
+            "start": null
+          },
+          "start": "2023-08-15T11:15:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Outdoor Family Storytime"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/events/programs/2023/08/22/outdoor-family-storytime"
+            }
+          },
+          "body": "The Library for the Performing Arts are teaming up with the Riverside Library to host their popular children's storytimes at our Outdoor Reading Room terrace. A Children's librarian will read stories, perform songs, and present other engaging activities with a focus on the performing arts. Bring your children ages 1 year old and up!\n\nDates: Twice every Tuesday at 10:30am and 11:15am from June 27 - August 29, 2023. \n\nInclement weather: In inclement weather, storytime will be canceled. Check this page for cancellation notices.",
+          "end": "2023-08-22T12:00:00-04:00",
+          "id": 677735,
+          "image": null,
+          "start": "2023-08-22T10:30:00-04:00",
+          "status": {
+            "status": true,
+            "label": null
+          },
+          "title": "Outdoor Family Storytime"
+        }
+      ],
+      "features": [
+        {
+          "id": "297238",
+          "title": "Special Collections Reading Room",
+          "body": "<p>Discover materials that are rare, unique, very old, and/or fragile and are available for researchers onsite only at the library.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Mendelssohn.jpg",
+          "weight": -10,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/lpa/special-collections"
+            }
+          }
+        },
+        {
+          "id": "295895",
+          "title": "Donate",
+          "body": "<p>Members receive generous benefits: invitations to exclusive events, ticket discounts, and more!</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/dance (1).JPG",
+          "weight": -9,
+          "_links": {
+            "self": {
+              "href": "https://secure3.convio.net/nypl/site/Donation2?7826.donation=form1&df_id=7826&mfc_pref=T&s_src=LPQXXZZ_QWLP"
+            }
+          }
+        },
+        {
+          "id": "56897",
+          "title": "The Reserve Film and Video Collection",
+          "body": "<p>This collection includes more than 6,000 16mm films, 5,000 VHS videocassettes, and 1,200 DVDs.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/minifeatures/moviecameramicroscope.jpg",
+          "weight": -8,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/about/locations/lpa/circulating-collections/reserve-film"
+            }
+          }
+        },
+        {
+          "id": "498015",
+          "title": "AMI Preservation and Access Initiative",
+          "body": "<p><a href=\"https://www.nypl.org/help/get-what-you-need/audio-video-files\">\u00a0</a><span><a href=\"https://www.nypl.org/help/get-what-you-need/audio-video-files\">Learn more about this major initiative here</a></span><a href=\"https://www.nypl.org/help/get-what-you-need/audio-video-files\"><span>.</span></a></p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/ami_feature_image_0.jpg",
+          "weight": -7,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/help/get-what-you-need/audio-video-files"
+            }
+          }
+        },
+        {
+          "id": "56906",
+          "title": "Search the Song Index",
+          "body": "<p>Find over 40,000 songs, from Broadway show tunes to pop and jazz standards</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/Song Index.jpg",
+          "weight": -6,
+          "_links": {
+            "self": {
+              "href": "http://legacy.www.nypl.org/research/lpa/songindex/"
+            }
+          }
+        },
+        {
+          "id": "319928",
+          "title": "Amy's Bread Caf\u00e9",
+          "body": "<p>Open 12 to\u00a06 p.m. Monday<span id=\"docs-internal-guid-e6ea1dc7-4867-9a48-98b1-a61611fe7130\"><span>\u2013</span></span>Saturday.\u00a0\u00a0Menu rotates daily and features sandwiches, salads, sweets, and more.</p>\n",
+          "image": "https://live-cdn-www.nypl.org/s3fs-public/images/features/cookies a_0.jpg",
+          "weight": -5,
+          "_links": {
+            "self": {
+              "href": "https://www.nypl.org/amys-bread-cafe"
+            }
+          }
+        }
+      ],
+      "alerts": []
+    },
+    "open": true
+  },
+  "meta": {
+    "notices": {
+      "cache": {
+        "last-refresh": "2023-08-10T13:09:47-04:00"
+      }
+    }
+  }
+}
