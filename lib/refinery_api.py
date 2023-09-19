@@ -59,16 +59,18 @@ def get_refinery_data(code, fields):
     if 'hours' in fields:
         hours_array = build_hours_array(
             location_data.get('hours').get('regular'),
-            datetime.datetime.today())
+            datetime.datetime.now())
         alerts = location_data.get('_embedded', {}).get('alerts')
-        if len(alerts) != 0:
+        # TODO: length of alerts with 'applies' is not 0
+        if [len(alerts) != 0]:
+            print('alerts length zero')
             hours_array = apply_alerts(hours_array, alerts)
     return data
 
 
 def check_cache_and_or_fetch_data(location):
     location_data = fetch_location_data(location)
-    delta = datetime.datetime.today() - location_data.get('updated_at')
+    delta = datetime.datetime.now() - location_data.get('updated_at')
     if delta.seconds > 3600:
         fetch_location_data.cache_clear()
         logger.info('Refreshing Refinery API data for location: ' + location)
@@ -141,16 +143,20 @@ def apply_alerts(days_array, alerts):
         if alert_start_string is None and alert_end_string is None:
             continue
         for day in days_array:
-            day_start = datetime.fromisoformat(day['startTime'])
-            day_end = datetime.fromisoformat(day['endTIme'])
-            alert_start = datetime.fromisoformat(alert_start_string)
-            alert_end = datetime.fromisoformat(alert_end_string)
+            if day['startTime'] is None and day['endTime'] is None:
+                continue
+            day_start, day_end, alert_start, alert_end = \
+                [datetime.datetime.fromisoformat(iso_string)
+                    for iso_string in
+                 [day['startTime'], day['endTime'],
+                 alert_start_string, alert_end_string]]
             # Closure starts during operating hours (Early closing):
             if alert_start > day_start and alert_start < day_end:
                 day['endTime'] = alert_start_string
             # Closure ends during operating hours (Late opening):
             if alert_end > day_start and alert_end < day_end:
-                day['endTime'] = alert_end_string
+                day['startTime'] = alert_end_string
             # (Closure occludes operating hours entirely)
             if alert_start <= day_start and alert_end >= day_end:
                 day['startTime'] = day['endTime'] = None
+    return days_array

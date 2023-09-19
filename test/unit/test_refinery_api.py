@@ -4,8 +4,10 @@ import os
 from unittest.mock import patch
 
 from lib.refinery_api import build_timestamp, get_refinery_data,\
-    fetch_location_data, build_hours_array
+    fetch_location_data, build_hours_array, apply_alerts
 from test.unit.test_helpers import TestHelpers
+from test.data.refinery_responses.closures import \
+    extended_closure_long, early_closure, delayed_opening, extended_closure_into_late_opening, extended_closure_short, temp_closure_overlapping
 
 
 DAYS = [
@@ -88,7 +90,7 @@ class TestRefineryApi:
         TestHelpers.tear_down()
 
     def fetch_data_success(location):
-        with open(f'test/unit/refinery_responses_regular/{location}.json',
+        with open(f'test/data/refinery_responses/{location}.json',
                   'r') as file:
             return json.load(file)
 
@@ -179,3 +181,13 @@ between 64th and 65th)',
 
     def test_refinery_data_invalid_location(self):
         assert get_refinery_data('xxx', ['location']) is None
+    
+    def test_apply_alerts_extended_closure_one_day(self):
+        alerts_added = apply_alerts(PARSED_HOURS_ARRAY, temp_closure_overlapping)
+        print(alerts_added)
+        assert False
+    # def test_apply_alerts_extended_closure_whole_week(self):
+    
+    # def test_apply_alerts_early_closing(self):
+    
+    # def test_apply_alerts_late_opening(self):
