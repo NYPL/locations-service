@@ -57,9 +57,12 @@ def get_refinery_data(code, fields):
     if 'location' in fields:
         data['location'] = parse_address(location_data)
     if 'hours' in fields:
-        data['hours'] = build_hours_array(
+        hours_array = build_hours_array(
             location_data.get('hours').get('regular'),
             datetime.datetime.today())
+        alerts = location_data.get('_embedded', {}).get('alerts')
+        if len(alerts) != 0:
+            hours_array = apply_alerts(hours_array, alerts)
     return data
 
 
@@ -129,3 +132,25 @@ def build_hours_array(days_array, today):
         days_with_timestamp.append(build_hours_hash(
             refinery_days_sunday_last[i], offset, today))
     return days_with_timestamp
+
+
+def apply_alerts(days_array, alerts):
+    for alert in alerts:
+        alert_start_string = alert.get('applies', {}).get('start')
+        alert_end_string = alert.get('applies', {}).get('end')
+        if alert_start_string is None and alert_end_string is None:
+            continue
+        for day in days_array:
+            day_start = datetime.fromisoformat(day['startTime'])
+            day_end = datetime.fromisoformat(day['endTIme'])
+            alert_start = datetime.fromisoformat(alert_start_string)
+            alert_end = datetime.fromisoformat(alert_end_string)
+            # Closure starts during operating hours (Early closing):
+            if alert_start > day_start and alert_start < day_end:
+                day['endTime'] = alert_start_string
+            # Closure ends during operating hours (Late opening):
+            if alert_end > day_start and alert_end < day_end:
+                day['endTime'] = alert_end_string
+            # (Closure occludes operating hours entirely)
+            if alert_start <= day_start and alert_end >= day_end:
+                day['startTime'] = day['endTime'] = None
