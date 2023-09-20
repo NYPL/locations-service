@@ -22,7 +22,7 @@ def fetch_location_data(location):
         response = response.json()
         return {
             'location_data': response.get('location'),
-            'updated_at': datetime.datetime.today()
+            'updated_at': datetime.datetime.now()
         }
     except RequestException as e:
         raise RefineryApiError(
@@ -62,9 +62,11 @@ def get_refinery_data(code, fields):
             datetime.datetime.now().astimezone())
         alerts = location_data.get('_embedded', {}).get('alerts')
         # TODO: length of alerts with 'applies' is not 0
-        if [len(alerts) != 0]:
-            print('alerts length zero')
+        closure_alerts = [alert for alert in alerts
+                          if alert.get('applies') is not None]
+        if [len(closure_alerts) != 0]:
             hours_array = apply_alerts(hours_array, alerts)
+        data['hours'] = hours_array
     return data
 
 
@@ -100,7 +102,7 @@ def build_timestamp(time, day):
         return None
     # extract 12 from '12:00'
     hour = int(time.split(':')[0])
-    return day.replace(hour=hour).strftime('%Y-%m-%dT%X')
+    return day.replace(hour=hour).isoformat()
 
 
 # refinery day is one element of the hours array returned by Refinery API
@@ -118,7 +120,6 @@ def build_hours_hash(refinery_day, offset, today):
         hours['today'] = True
     if offset == 1:
         hours['nextBusinessDay'] = True
-
     return hours
 
 

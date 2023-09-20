@@ -49,27 +49,27 @@ DAYS = [
 
 PARSED_HOURS_ARRAY = [
     {"day": 'Monday',
-     "startTime": '2000-01-03T10:00:00-04:00',
-     "endTime": '2000-01-03T18:00:00-04:00'},
+     "startTime": '2000-01-03T10:00:00-05:00',
+     "endTime": '2000-01-03T18:00:00-05:00'},
     {"day": 'Tuesday',
-     "startTime": '2000-01-04T10:00:00-04:00',
-     "endTime": '2000-01-04T20:00:00-04:00'},
+     "startTime": '2000-01-04T10:00:00-05:00',
+     "endTime": '2000-01-04T20:00:00-05:00'},
     {"day": 'Wednesday',
-     "startTime": '2000-01-05T13:00:00-04:00',
-     "endTime": '2000-01-05T17:00:00-04:00'},
+     "startTime": '2000-01-05T13:00:00-05:00',
+     "endTime": '2000-01-05T17:00:00-05:00'},
     {"day": 'Thursday',
-     "startTime": '2000-01-06T10:00:00-04:00',
-     "endTime": '2000-01-06T18:00:00-04:00'},
+     "startTime": '2000-01-06T10:00:00-05:00',
+     "endTime": '2000-01-06T18:00:00-05:00'},
     {"day": 'Friday',
-     "startTime": '2000-01-07T10:00:00-04:00',
-     "endTime": '2000-01-07T20:00:00-04:00'},
+     "startTime": '2000-01-07T10:00:00-05:00',
+     "endTime": '2000-01-07T20:00:00-05:00'},
     {"day": 'Saturday',
-     "startTime": '2000-01-01T10:00:00-04:00',
-     "endTime": '2000-01-01T20:00:00-04:00',
+     "startTime": '2000-01-01T10:00:00-05:00',
+     "endTime": '2000-01-01T20:00:00-05:00',
      "today": True},
     {"day": 'Sunday',
-     "startTime": '2000-01-02T13:00:00-04:00',
-     "endTime": '2000-01-02T17:00:00-04:00',
+     "startTime": '2000-01-02T13:00:00-05:00',
+     "endTime": '2000-01-02T17:00:00-05:00',
      "nextBusinessDay": True},
 ]
 
@@ -97,10 +97,10 @@ class TestRefineryApi:
     def test_build_timestamp(self):
         assert (build_timestamp(
             '10:00', datetime.datetime(2000, 1, 1, 7).astimezone())) == \
-            '2000-01-01T10:00:00'
+            '2000-01-01T10:00:00-05:00'
         assert (build_timestamp(
             '7:00', datetime.datetime(2000, 1, 1, 1).astimezone())) == \
-            '2000-01-01T07:00:00'
+            '2000-01-01T07:00:00-05:00'
 
     def test_build_hours_array(self):
         assert build_hours_array(
@@ -123,9 +123,8 @@ class TestRefineryApi:
                 datetime.datetime(2000, 1, 1)
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
-            mock_datetime.datetime.astimezone = \
+            mock_datetime.datetime.astimezone.return_value = \
                 datetime.datetime(2000, 1, 1).astimezone()
-            print(f'w/in test {datetime.datetime(2000, 1, 1).astimezone()}')
             requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
                               'schwarzman',
                               json=TestRefineryApi
@@ -133,18 +132,18 @@ class TestRefineryApi:
             data = get_refinery_data(
                 'mal82', ['location', 'hours'])
             assert data.get('hours') == \
-                [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00-04:00',
-                    'endTime': '2000-01-03T18:00:00-04:00'},
-                 {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-04:00',
-                    'endTime': '2000-01-04T20:00:00-04:00'},
-                 {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-04:00',
-                    'endTime': '2000-01-05T20:00:00-04:00'},
-                 {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-04:00',
-                    'endTime': '2000-01-06T18:00:00-04:00'},
-                 {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-04:00',
-                    'endTime': '2000-01-07T18:00:00-04:00'},
-                 {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-04:00',
-                    'endTime': '2000-01-01T18:00:00-04:00', 'today': True},
+                [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00-05:00',
+                    'endTime': '2000-01-03T18:00:00-05:00'},
+                 {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-05:00',
+                    'endTime': '2000-01-04T20:00:00-05:00'},
+                 {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-05:00',
+                    'endTime': '2000-01-05T20:00:00-05:00'},
+                 {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-05:00',
+                    'endTime': '2000-01-06T18:00:00-05:00'},
+                 {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-05:00',
+                    'endTime': '2000-01-07T18:00:00-05:00'},
+                 {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-05:00',
+                    'endTime': '2000-01-01T18:00:00-05:00', 'today': True},
                  {'day': 'Sunday', 'startTime': None, 'endTime': None,
                  'nextBusinessDay': True}]
 
