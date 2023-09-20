@@ -51,7 +51,7 @@ extended_closure_into_late_opening = [{
 
 early_closure = [{
     "applies": {
-        "start": "2000-01-06T18:00:00-04:00",
+        "start": "2000-01-06T14:00:00-04:00",
         "end": "2000-01-07T10:00:00-04:00"
     }
 }]

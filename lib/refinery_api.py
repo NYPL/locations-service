@@ -61,10 +61,10 @@ def get_refinery_data(code, fields):
             location_data.get('hours').get('regular'),
             datetime.datetime.now().astimezone())
         alerts = location_data.get('_embedded', {}).get('alerts')
-        # TODO: length of alerts with 'applies' is not 0
         closure_alerts = [alert for alert in alerts
                           if alert.get('applies') is not None]
-        if [len(closure_alerts) != 0]:
+        if len(closure_alerts) > 0:
+            logger.debug(f'{len(closure_alerts)} closure alerts found.')
             hours_array = apply_alerts(hours_array, alerts)
         data['hours'] = hours_array
     return data
@@ -137,27 +137,37 @@ def build_hours_array(days_array, today):
     return days_with_timestamp
 
 
+def update_times(day, alert_start_string, alert_end_string):
+    if day['startTime'] is None and day['endTime'] is None:
+        return day
+    day_start, day_end, alert_start, alert_end = \
+        [datetime.datetime.fromisoformat(iso_string)
+            for iso_string in
+            [day['startTime'], day['endTime'],
+             alert_start_string, alert_end_string]]
+    # Closure starts during operating hours (Early closing):
+    if alert_start > day_start and alert_start < day_end:
+        day_end = alert_start_string
+    # Closure ends during operating hours (Late opening):
+    if alert_end > day_start and alert_end < day_end:
+        day_start = alert_end_string
+    # (Closure occludes operating hours entirely)
+    if alert_start <= day_start and alert_end >= day_end:
+        day_start = day_end = None
+    return (day_start, day_end)
+
+
 def apply_alerts(days_array, alerts):
+    applied_alerts = []
     for alert in alerts:
         alert_start_string = alert.get('applies', {}).get('start')
         alert_end_string = alert.get('applies', {}).get('end')
         if alert_start_string is None and alert_end_string is None:
             continue
         for day in days_array:
-            if day['startTime'] is None and day['endTime'] is None:
-                continue
-            day_start, day_end, alert_start, alert_end = \
-                [datetime.datetime.fromisoformat(iso_string)
-                    for iso_string in
-                 [day['startTime'], day['endTime'],
-                 alert_start_string, alert_end_string]]
-            # Closure starts during operating hours (Early closing):
-            if alert_start > day_start and alert_start < day_end:
-                day['endTime'] = alert_start_string
-            # Closure ends during operating hours (Late opening):
-            if alert_end > day_start and alert_end < day_end:
-                day['startTime'] = alert_end_string
-            # (Closure occludes operating hours entirely)
-            if alert_start <= day_start and alert_end >= day_end:
-                day['startTime'] = day['endTime'] = None
-    return days_array
+            day_start, day_end = update_times(day, alert_start_string, alert_end_string)
+            new_day = day.copy()
+            new_day['startTime'] = day_start
+            new_day['endTime'] = day_end
+            applied_alerts.append(new_day)
+    return applied_alerts

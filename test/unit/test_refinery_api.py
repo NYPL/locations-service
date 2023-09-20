@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from freezegun import freeze_time
 from unittest.mock import patch
 
 from lib.refinery_api import build_timestamp, get_refinery_data,\
@@ -117,45 +118,39 @@ class TestRefineryApi:
         # RefineryApi client returns cached values upon second request
         assert requests_mock.call_count == 1
 
+    @freeze_time(datetime.datetime(2000, 1, 1))
     def test_get_refinery_data_address_and_hours(self, requests_mock):
-        with patch('lib.refinery_api.datetime') as mock_datetime:
-            mock_datetime.datetime.now.return_value = \
-                datetime.datetime(2000, 1, 1)
-            mock_datetime.timedelta.side_effect = \
-                lambda days: datetime.timedelta(days=days)
-            mock_datetime.datetime.astimezone.return_value = \
-                datetime.datetime(2000, 1, 1).astimezone()
-            requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
-                              'schwarzman',
-                              json=TestRefineryApi
-                              .fetch_data_success('schwarzman'))
-            data = get_refinery_data(
-                'mal82', ['location', 'hours'])
-            assert data.get('hours') == \
-                [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00-05:00',
-                    'endTime': '2000-01-03T18:00:00-05:00'},
-                 {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-05:00',
-                    'endTime': '2000-01-04T20:00:00-05:00'},
-                 {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-05:00',
-                    'endTime': '2000-01-05T20:00:00-05:00'},
-                 {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-05:00',
-                    'endTime': '2000-01-06T18:00:00-05:00'},
-                 {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-05:00',
-                    'endTime': '2000-01-07T18:00:00-05:00'},
-                 {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-05:00',
-                    'endTime': '2000-01-01T18:00:00-05:00', 'today': True},
-                 {'day': 'Sunday', 'startTime': None, 'endTime': None,
+        requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
+                          'schwarzman',
+                          json=TestRefineryApi
+                            .fetch_data_success('schwarzman'))
+        data = get_refinery_data(
+            'mal82', ['location', 'hours'])
+        assert data.get('hours') == \
+            [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00-05:00',
+                'endTime': '2000-01-03T18:00:00-05:00'},
+                {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-05:00',
+                 'endTime': '2000-01-04T20:00:00-05:00'},
+                {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-05:00',
+                 'endTime': '2000-01-05T20:00:00-05:00'},
+                {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-05:00',
+                 'endTime': '2000-01-06T18:00:00-05:00'},
+                {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-05:00',
+                 'endTime': '2000-01-07T18:00:00-05:00'},
+                {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-05:00',
+                 'endTime': '2000-01-01T18:00:00-05:00', 'today': True},
+                {'day': 'Sunday', 'startTime': None, 'endTime': None,
                  'nextBusinessDay': True}]
 
-            assert data.get('location') == \
-                {'city': 'New York',
-                 'line1': 'Fifth Avenue and 42nd Street',
-                 'postal_code': '10018',
-                 'state': 'NY'}
+        assert data.get('location') == \
+            {'city': 'New York',
+                'line1': 'Fifth Avenue and 42nd Street',
+                'postal_code': '10018',
+                'state': 'NY'}
 
-            get_refinery_data('mal82', ['location', 'hours'])
-            # cached data was accessed so only 1 api call
-            assert requests_mock.call_count == 1
+        get_refinery_data('mal82', ['location', 'hours'])
+        # cached data was accessed so only 1 api call
+        assert requests_mock.call_count == 1
 
     def test_get_refinery_data_invalidate_cache(self, requests_mock):
         requests_mock.get(
@@ -185,19 +180,39 @@ between 64th and 65th)',
         assert get_refinery_data('xxx', ['location']) is None
 
     def test_apply_alerts_extended_closure_one_day(self):
+        hours = PARSED_HOURS_ARRAY.copy()
         alerts_added_days = apply_alerts(
-            PARSED_HOURS_ARRAY, extended_closure_short)
+            hours, extended_closure_short)
         for day in alerts_added_days:
             # Thursday should be entirely closed
             if day['day'] == 'Thursday':
                 assert day['startTime'] is day['endTime'] is None
             else:
-                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                parsed_day = [pday for pday in hours
                               if pday['day'] == day['day']][0]
                 # The rest of the days should be unchanged
                 assert day['startTime'] == parsed_day['startTime']
-    # def test_apply_alerts_extended_closure_whole_week(self):
 
-    # def test_apply_alerts_early_closing(self):
+    def test_apply_alerts_extended_closure_whole_week(self):
+        hours = PARSED_HOURS_ARRAY.copy()
+        alerts_added_days = apply_alerts(
+            hours, extended_closure_long)
+        for day in alerts_added_days:
+            assert day['startTime'] is day['endTime'] is None
+
+    def test_apply_alerts_early_closing(self):
+        hours = PARSED_HOURS_ARRAY.copy()
+        alerts_added_days = apply_alerts(
+            hours, early_closure)
+        for day in alerts_added_days:
+            # Thursday should be entirely closed
+            if day['day'] == 'Thursday':
+                assert day['startTime'] == "2000-01-06T10:00:00-04:00"
+                assert day['endTime'] == "2000-01-06T14:00:00-04:00"
+            else:
+                parsed_day = [pday for pday in hours
+                              if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
+                assert day['startTime'] == parsed_day['startTime']
 
     # def test_apply_alerts_late_opening(self):
