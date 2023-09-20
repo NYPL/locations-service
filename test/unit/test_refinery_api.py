@@ -1,7 +1,6 @@
 import datetime
 import json
 import os
-from numpy import where
 from unittest.mock import patch
 
 from lib.refinery_api import build_timestamp, get_refinery_data,\
@@ -97,15 +96,15 @@ class TestRefineryApi:
 
     def test_build_timestamp(self):
         assert (build_timestamp(
-            '10:00', datetime.datetime(2000, 1, 1, 7))) == \
+            '10:00', datetime.datetime(2000, 1, 1, 7).astimezone())) == \
             '2000-01-01T10:00:00'
         assert (build_timestamp(
-            '7:00', datetime.datetime(2000, 1, 1, 1))) == \
+            '7:00', datetime.datetime(2000, 1, 1, 1).astimezone())) == \
             '2000-01-01T07:00:00'
 
     def test_build_hours_array(self):
         assert build_hours_array(
-            DAYS, datetime.datetime(2000, 1, 1)) == \
+            DAYS, datetime.datetime(2000, 1, 1).astimezone()) == \
             PARSED_HOURS_ARRAY
 
     def test_fetch_location_data(self, requests_mock):
@@ -120,10 +119,13 @@ class TestRefineryApi:
 
     def test_get_refinery_data_address_and_hours(self, requests_mock):
         with patch('lib.refinery_api.datetime') as mock_datetime:
-            mock_datetime.datetime.today.return_value = \
+            mock_datetime.datetime.now.return_value = \
                 datetime.datetime(2000, 1, 1)
             mock_datetime.timedelta.side_effect = \
                 lambda days: datetime.timedelta(days=days)
+            mock_datetime.datetime.astimezone = \
+                datetime.datetime(2000, 1, 1).astimezone()
+            print(f'w/in test {datetime.datetime(2000, 1, 1).astimezone()}')
             requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
                               'schwarzman',
                               json=TestRefineryApi
@@ -161,7 +163,7 @@ class TestRefineryApi:
             os.environ['REFINERY_API_BASE_URL'] + 'lpa',
             json=TestRefineryApi.fetch_data_success('lpa'))
         with patch('lib.refinery_api.datetime') as mock_datetime:
-            mock_datetime.datetime.today.side_effect = \
+            mock_datetime.datetime.now.side_effect = \
                 [datetime.datetime(2000, 1, 1, 10),
                  datetime.datetime(2000, 1, 1, 10),
                  # two hours later so we can check cache invalidation
@@ -187,11 +189,13 @@ between 64th and 65th)',
         alerts_added_days = apply_alerts(
             PARSED_HOURS_ARRAY, extended_closure_short)
         for day in alerts_added_days:
+            # Thursday should be entirely closed
             if day['day'] == 'Thursday':
                 assert day['startTime'] is day['endTime'] is None
             else:
                 parsed_day = [pday for pday in PARSED_HOURS_ARRAY
                               if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
                 assert day['startTime'] == parsed_day['startTime']
     # def test_apply_alerts_extended_closure_whole_week(self):
 
