@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from numpy import where
 from unittest.mock import patch
 
 from lib.refinery_api import build_timestamp, get_refinery_data,\
@@ -49,27 +50,27 @@ DAYS = [
 
 PARSED_HOURS_ARRAY = [
     {"day": 'Monday',
-     "startTime": '2000-01-03T10:00:00',
-     "endTime": '2000-01-03T18:00:00'},
+     "startTime": '2000-01-03T10:00:00-04:00',
+     "endTime": '2000-01-03T18:00:00-04:00'},
     {"day": 'Tuesday',
-     "startTime": '2000-01-04T10:00:00',
-     "endTime": '2000-01-04T20:00:00'},
+     "startTime": '2000-01-04T10:00:00-04:00',
+     "endTime": '2000-01-04T20:00:00-04:00'},
     {"day": 'Wednesday',
-     "startTime": '2000-01-05T13:00:00',
-     "endTime": '2000-01-05T17:00:00'},
+     "startTime": '2000-01-05T13:00:00-04:00',
+     "endTime": '2000-01-05T17:00:00-04:00'},
     {"day": 'Thursday',
-     "startTime": '2000-01-06T10:00:00',
-     "endTime": '2000-01-06T18:00:00'},
+     "startTime": '2000-01-06T10:00:00-04:00',
+     "endTime": '2000-01-06T18:00:00-04:00'},
     {"day": 'Friday',
-     "startTime": '2000-01-07T10:00:00',
-     "endTime": '2000-01-07T20:00:00'},
+     "startTime": '2000-01-07T10:00:00-04:00',
+     "endTime": '2000-01-07T20:00:00-04:00'},
     {"day": 'Saturday',
-     "startTime": '2000-01-01T10:00:00',
-     "endTime": '2000-01-01T20:00:00',
+     "startTime": '2000-01-01T10:00:00-04:00',
+     "endTime": '2000-01-01T20:00:00-04:00',
      "today": True},
     {"day": 'Sunday',
-     "startTime": '2000-01-02T13:00:00',
-     "endTime": '2000-01-02T17:00:00',
+     "startTime": '2000-01-02T13:00:00-04:00',
+     "endTime": '2000-01-02T17:00:00-04:00',
      "nextBusinessDay": True},
 ]
 
@@ -130,18 +131,18 @@ class TestRefineryApi:
             data = get_refinery_data(
                 'mal82', ['location', 'hours'])
             assert data.get('hours') == \
-                [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00',
-                    'endTime': '2000-01-03T18:00:00'},
-                 {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00',
-                    'endTime': '2000-01-04T20:00:00'},
-                 {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00',
-                    'endTime': '2000-01-05T20:00:00'},
-                 {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00',
-                    'endTime': '2000-01-06T18:00:00'},
-                 {'day': 'Friday', 'startTime': '2000-01-07T10:00:00',
-                    'endTime': '2000-01-07T18:00:00'},
-                 {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00',
-                    'endTime': '2000-01-01T18:00:00', 'today': True},
+                [{'day': 'Monday', 'startTime': '2000-01-03T10:00:00-04:00',
+                    'endTime': '2000-01-03T18:00:00-04:00'},
+                 {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-04:00',
+                    'endTime': '2000-01-04T20:00:00-04:00'},
+                 {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-04:00',
+                    'endTime': '2000-01-05T20:00:00-04:00'},
+                 {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-04:00',
+                    'endTime': '2000-01-06T18:00:00-04:00'},
+                 {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-04:00',
+                    'endTime': '2000-01-07T18:00:00-04:00'},
+                 {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-04:00',
+                    'endTime': '2000-01-01T18:00:00-04:00', 'today': True},
                  {'day': 'Sunday', 'startTime': None, 'endTime': None,
                  'nextBusinessDay': True}]
 
@@ -181,13 +182,19 @@ between 64th and 65th)',
 
     def test_refinery_data_invalid_location(self):
         assert get_refinery_data('xxx', ['location']) is None
-    
+
     def test_apply_alerts_extended_closure_one_day(self):
-        alerts_added = apply_alerts(PARSED_HOURS_ARRAY, temp_closure_overlapping)
-        print(alerts_added)
-        assert False
+        alerts_added_days = apply_alerts(
+            PARSED_HOURS_ARRAY, extended_closure_short)
+        for day in alerts_added_days:
+            if day['day'] == 'Thursday':
+                assert day['startTime'] is day['endTime'] is None
+            else:
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                              if pday['day'] == day['day']][0]
+                assert day['startTime'] == parsed_day['startTime']
     # def test_apply_alerts_extended_closure_whole_week(self):
-    
+
     # def test_apply_alerts_early_closing(self):
-    
+
     # def test_apply_alerts_late_opening(self):

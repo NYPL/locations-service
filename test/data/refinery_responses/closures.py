@@ -5,10 +5,11 @@ extended_closure_long = [{
     }
 }]
 
+# Closed 01-06
 extended_closure_short = [{
     "applies": {
-        "start": "2000-01-05T18:00:00",
-        "end": "2024-01-07T10:00:00"
+        "start": "2000-01-05T18:00:00-04:00",
+        "end": "2000-01-07T10:00:00-05:00"
     }
 }]
 
@@ -22,7 +23,7 @@ extended_closure_overlapping = [
     {
         "applies": {
             "start": "2000-01-05T18:00:00-04:00",
-            "end": "2024-01-06T13:00:00-05:00"
+            "end": "2000-01-06T13:00:00-05:00"
         }
     }
 ]

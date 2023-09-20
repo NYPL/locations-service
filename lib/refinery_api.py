@@ -59,7 +59,7 @@ def get_refinery_data(code, fields):
     if 'hours' in fields:
         hours_array = build_hours_array(
             location_data.get('hours').get('regular'),
-            datetime.datetime.now())
+            datetime.datetime.now().astimezone())
         alerts = location_data.get('_embedded', {}).get('alerts')
         # TODO: length of alerts with 'applies' is not 0
         if [len(alerts) != 0]:
