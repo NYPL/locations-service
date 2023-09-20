@@ -57,16 +57,12 @@ def get_refinery_data(code, fields):
     if 'location' in fields:
         data['location'] = parse_address(location_data)
     if 'hours' in fields:
-        hours_array = build_hours_array(
-            location_data.get('hours').get('regular'),
-            datetime.datetime.now().astimezone())
         alerts = location_data.get('_embedded', {}).get('alerts')
         closure_alerts = [alert for alert in alerts
                           if alert.get('applies') is not None]
-        if len(closure_alerts) > 0:
-            logger.debug(f'{len(closure_alerts)} closure alerts found.')
-            hours_array = apply_alerts(hours_array, alerts)
-        data['hours'] = hours_array
+        data['hours'] = build_hours_array(
+            location_data.get('hours').get('regular'),
+            datetime.datetime.now().astimezone(), closure_alerts)
     return data
 
 
@@ -107,14 +103,23 @@ def build_timestamp(time, day):
 
 # refinery day is one element of the hours array returned by Refinery API
 # today is a datetime object
-def build_hours_hash(refinery_day, offset, today):
+def build_hours_hash(refinery_day, offset, today, alerts=[]):
     new_date = today + datetime.timedelta(days=offset)
+    start_time = build_timestamp(
+        refinery_day.get('open'), new_date)
+    end_time = build_timestamp(
+        refinery_day.get('close'), new_date)
+    for alert in alerts:
+        alert_start = alert.get('applies', {}).get('start')
+        alert_end = alert.get('applies', {}).get('end')
+        if alert_start is None and alert_end is None:
+            continue
+        start_time, end_time = update_times(
+            start_time, end_time, alert_start, alert_end)
     hours = {
         'day': new_date.strftime('%A'),
-        'startTime': build_timestamp(
-            refinery_day.get('open'), new_date),
-        'endTime': build_timestamp(
-            refinery_day.get('close'), new_date),
+        'startTime': start_time,
+        'endTime': end_time
     }
     if offset == 0:
         hours['today'] = True
@@ -123,7 +128,7 @@ def build_hours_hash(refinery_day, offset, today):
     return hours
 
 
-def build_hours_array(days_array, today):
+def build_hours_array(days_array, today, alerts=[]):
     # put sunday
     refinery_days_sunday_last = days_array[1:] + days_array[0:]
     # loop over that array, creating full timestamps for the start and
@@ -133,41 +138,29 @@ def build_hours_array(days_array, today):
     for i in range(7):
         offset = (7 + i - today.weekday()) % 7
         days_with_timestamp.append(build_hours_hash(
-            refinery_days_sunday_last[i], offset, today))
+            refinery_days_sunday_last[i], offset, today, alerts))
     return days_with_timestamp
 
 
-def update_times(day, alert_start_string, alert_end_string):
-    if day['startTime'] is None and day['endTime'] is None:
-        return day
+def update_times(day_start_string, day_end_string, alert_start_string, alert_end_string):
+    """
+    All of these strings are in iso format
+    """
+    if day_start_string is None and day_end_string is None:
+        return (day_start_string, day_end_string)
+    # Convert to object so we can math!
     day_start, day_end, alert_start, alert_end = \
         [datetime.datetime.fromisoformat(iso_string)
             for iso_string in
-            [day['startTime'], day['endTime'],
+            [day_start_string, day_end_string,
              alert_start_string, alert_end_string]]
     # Closure starts during operating hours (Early closing):
     if alert_start > day_start and alert_start < day_end:
-        day_end = alert_start_string
+        day_end_string = alert_start_string
     # Closure ends during operating hours (Late opening):
-    if alert_end > day_start and alert_end < day_end:
-        day_start = alert_end_string
+    elif alert_end > day_start and alert_end < day_end:
+        day_start_string = alert_end_string
     # (Closure occludes operating hours entirely)
-    if alert_start <= day_start and alert_end >= day_end:
-        day_start = day_end = None
-    return (day_start, day_end)
-
-
-def apply_alerts(days_array, alerts):
-    applied_alerts = []
-    for alert in alerts:
-        alert_start_string = alert.get('applies', {}).get('start')
-        alert_end_string = alert.get('applies', {}).get('end')
-        if alert_start_string is None and alert_end_string is None:
-            continue
-        for day in days_array:
-            day_start, day_end = update_times(day, alert_start_string, alert_end_string)
-            new_day = day.copy()
-            new_day['startTime'] = day_start
-            new_day['endTime'] = day_end
-            applied_alerts.append(new_day)
-    return applied_alerts
+    elif alert_start <= day_start and alert_end >= day_end:
+        return (None, None)
+    return (day_start_string, day_end_string)

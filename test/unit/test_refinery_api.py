@@ -1,11 +1,11 @@
-import datetime
+from datetime import datetime, timezone, timedelta
 import json
 import os
 from freezegun import freeze_time
 from unittest.mock import patch
 
 from lib.refinery_api import build_timestamp, get_refinery_data,\
-    fetch_location_data, build_hours_array, apply_alerts
+    fetch_location_data, build_hours_array
 from test.unit.test_helpers import TestHelpers
 from test.data.refinery_responses.closures import \
     extended_closure_long, early_closure, delayed_opening, extended_closure_into_late_opening, extended_closure_short, temp_closure_overlapping
@@ -78,7 +78,7 @@ PARSED_HOURS_ARRAY = [
 class TestRefineryApi:
 
     def timedelta_side_effect(day_offset):
-        return datetime.timedelta(days=day_offset)
+        return timedelta(days=day_offset)
 
     @classmethod
     def setup_class(cls):
@@ -97,15 +97,15 @@ class TestRefineryApi:
 
     def test_build_timestamp(self):
         assert (build_timestamp(
-            '10:00', datetime.datetime(2000, 1, 1, 7).astimezone())) == \
+            '10:00', datetime(2000, 1, 1, 7).astimezone())) == \
             '2000-01-01T10:00:00-05:00'
         assert (build_timestamp(
-            '7:00', datetime.datetime(2000, 1, 1, 1).astimezone())) == \
+            '7:00', datetime(2000, 1, 1, 1).astimezone())) == \
             '2000-01-01T07:00:00-05:00'
 
     def test_build_hours_array(self):
         assert build_hours_array(
-            DAYS, datetime.datetime(2000, 1, 1).astimezone()) == \
+            DAYS, datetime(2000, 1, 1).astimezone()) == \
             PARSED_HOURS_ARRAY
 
     def test_fetch_location_data(self, requests_mock):
@@ -113,12 +113,12 @@ class TestRefineryApi:
                           json=TestRefineryApi.fetch_data_success('schomburg'))
         data = fetch_location_data('schomburg')
         data = fetch_location_data('schomburg')
-        assert type(data['updated_at']) is datetime.datetime
+        assert type(data['updated_at']) is datetime
         assert type(data['location_data']) is dict
         # RefineryApi client returns cached values upon second request
         assert requests_mock.call_count == 1
 
-    @freeze_time(datetime.datetime(2000, 1, 1))
+    @freeze_time(datetime(2000, 1, 1))
     def test_get_refinery_data_address_and_hours(self, requests_mock):
         requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
                           'schwarzman',
@@ -158,13 +158,13 @@ class TestRefineryApi:
             json=TestRefineryApi.fetch_data_success('lpa'))
         with patch('lib.refinery_api.datetime') as mock_datetime:
             mock_datetime.datetime.now.side_effect = \
-                [datetime.datetime(2000, 1, 1, 10),
-                 datetime.datetime(2000, 1, 1, 10),
+                [datetime(2000, 1, 1, 10),
+                 datetime(2000, 1, 1, 10),
                  # two hours later so we can check cache invalidation
-                 datetime.datetime(2000, 1, 1, 12),
-                 datetime.datetime(2000, 1, 1, 12)]
+                 datetime(2000, 1, 1, 12),
+                 datetime(2000, 1, 1, 12)]
             mock_datetime.timedelta.side_effect = \
-                lambda days: datetime.timedelta(days=days)
+                lambda days: timedelta(days=days)
             get_refinery_data('pal82', ['location'])
             data = get_refinery_data('pal82', ['location'])
             assert data.get('location') == \
@@ -180,39 +180,57 @@ between 64th and 65th)',
         assert get_refinery_data('xxx', ['location']) is None
 
     def test_apply_alerts_extended_closure_one_day(self):
-        hours = PARSED_HOURS_ARRAY.copy()
-        alerts_added_days = apply_alerts(
-            hours, extended_closure_short)
+        hours = DAYS.copy()
+        alerts_added_days = build_hours_array(
+            hours, datetime(2000, 1, 1).astimezone(), extended_closure_short)
         for day in alerts_added_days:
             # Thursday should be entirely closed
             if day['day'] == 'Thursday':
                 assert day['startTime'] is day['endTime'] is None
             else:
-                parsed_day = [pday for pday in hours
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
                               if pday['day'] == day['day']][0]
                 # The rest of the days should be unchanged
                 assert day['startTime'] == parsed_day['startTime']
 
     def test_apply_alerts_extended_closure_whole_week(self):
-        hours = PARSED_HOURS_ARRAY.copy()
-        alerts_added_days = apply_alerts(
-            hours, extended_closure_long)
+        hours = DAYS.copy()
+        alerts_added_days = build_hours_array(
+            hours, datetime(2000, 1, 1).astimezone(), extended_closure_long)
         for day in alerts_added_days:
             assert day['startTime'] is day['endTime'] is None
 
     def test_apply_alerts_early_closing(self):
-        hours = PARSED_HOURS_ARRAY.copy()
-        alerts_added_days = apply_alerts(
-            hours, early_closure)
+        hours = DAYS.copy()
+        date = datetime(2000, 1, 1, tzinfo=timezone(-timedelta(hours=5)))
+        alerts_added_days = build_hours_array(
+            hours, date, early_closure)
         for day in alerts_added_days:
             # Thursday should be entirely closed
             if day['day'] == 'Thursday':
-                assert day['startTime'] == "2000-01-06T10:00:00-04:00"
-                assert day['endTime'] == "2000-01-06T14:00:00-04:00"
+                assert day['startTime'] == "2000-01-06T10:00:00-05:00"
+                assert day['endTime'] == "2000-01-06T14:00:00-05:00"
             else:
-                parsed_day = [pday for pday in hours
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
                               if pday['day'] == day['day']][0]
                 # The rest of the days should be unchanged
                 assert day['startTime'] == parsed_day['startTime']
+                assert day['endTime'] == parsed_day['endTime']
 
-    # def test_apply_alerts_late_opening(self):
+    def test_apply_alerts_late_opening(self):
+        hours = DAYS.copy()
+        date = datetime(2000, 1, 1, tzinfo=timezone(-timedelta(hours=5)))
+        alerts_added_days = build_hours_array(
+            hours, date, delayed_opening)
+        for day in alerts_added_days:
+            # Thursday should be entirely closed
+            if day['day'] == 'Friday':
+                assert day['startTime'] == "2000-01-07T12:00:00-05:00"
+                assert day['endTime'] == "2000-01-07T20:00:00-05:00"
+            else:
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                              if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
+                assert day['startTime'] == parsed_day['startTime']
+                assert day['endTime'] == parsed_day['endTime']
+
