@@ -164,7 +164,5 @@ def update_times(day_start_string, day_end_string, alert_start_string, alert_end
         day_start_string = alert_end_string
     # (Closure occludes operating hours entirely)
     elif alert_start <= day_start and alert_end >= day_end:
-        print('alert start ', alert_start,'lte', 'day start', day_start)
-        print('alert end ', alert_end,'gte', 'day end', day_end)
         return (None, None)
     return (day_start_string, day_end_string)
