@@ -129,7 +129,6 @@ def build_hours_hash(refinery_day, offset, today, alerts=[]):
 
 
 def build_hours_array(days_array, today, alerts=[]):
-    # put sunday
     refinery_days_sunday_last = days_array[1:] + days_array[0:]
     # loop over that array, creating full timestamps for the start and
     # endhours using as the first date. today is incremented by i
@@ -144,7 +143,10 @@ def build_hours_array(days_array, today, alerts=[]):
 
 def update_times(day_start_string, day_end_string, alert_start_string, alert_end_string):
     """
-    All of these strings are in iso format
+    Given iso-formatted strings representing regular scheduled opening and 
+    closing times ('day_start' and 'day_end' strings), and the end and start 
+    times of a closure alert, update the day start and end strings to account
+    for any overlapping/relevant closure alerts.
     """
     if day_start_string is None and day_end_string is None:
         return (day_start_string, day_end_string)
@@ -162,5 +164,7 @@ def update_times(day_start_string, day_end_string, alert_start_string, alert_end
         day_start_string = alert_end_string
     # (Closure occludes operating hours entirely)
     elif alert_start <= day_start and alert_end >= day_end:
+        print('alert start ', alert_start,'lte', 'day start', day_start)
+        print('alert end ', alert_end,'gte', 'day end', day_end)
         return (None, None)
     return (day_start_string, day_end_string)

@@ -206,7 +206,6 @@ between 64th and 65th)',
         alerts_added_days = build_hours_array(
             hours, date, early_closure)
         for day in alerts_added_days:
-            # Thursday should be entirely closed
             if day['day'] == 'Thursday':
                 assert day['startTime'] == "2000-01-06T10:00:00-05:00"
                 assert day['endTime'] == "2000-01-06T14:00:00-05:00"
@@ -223,7 +222,6 @@ between 64th and 65th)',
         alerts_added_days = build_hours_array(
             hours, date, delayed_opening)
         for day in alerts_added_days:
-            # Thursday should be entirely closed
             if day['day'] == 'Friday':
                 assert day['startTime'] == "2000-01-07T12:00:00-05:00"
                 assert day['endTime'] == "2000-01-07T20:00:00-05:00"
@@ -234,3 +232,39 @@ between 64th and 65th)',
                 assert day['startTime'] == parsed_day['startTime']
                 assert day['endTime'] == parsed_day['endTime']
 
+    def test_apply_alerts_temp_overlapping(self):
+        hours = DAYS.copy()
+        date = datetime(2000, 1, 1, tzinfo=timezone(-timedelta(hours=5)))
+        alerts_added_days = build_hours_array(
+            hours, date, temp_closure_overlapping)
+        for day in alerts_added_days:
+            if day['day'] == 'Wednesday':
+                # The two alerts are from Tues 8pm-Weds 2pm and Weds
+                # 11am-12pm. Ensure that 12pm doesn't overwrite the
+                # first, later closure alert
+                assert day['startTime'] == "2000-01-05T14:00:00-05:00"
+                assert day['endTime'] == "2000-01-05T17:00:00-05:00"
+            else:
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                              if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
+                assert day['startTime'] == parsed_day['startTime']
+                assert day['endTime'] == parsed_day['endTime']
+
+    def test_apply_alerts_extended_closure_late_opening(self):
+        hours = DAYS.copy()
+        date = datetime(2000, 1, 1, tzinfo=timezone(-timedelta(hours=5)))
+        alerts_added_days = build_hours_array(
+            hours, date, extended_closure_into_late_opening)
+        for day in alerts_added_days:
+            if day['day'] == 'Thursday':
+                assert day['startTime'] is day['endTime'] is None
+            elif day['day'] == 'Friday':
+                assert day['startTime'] == "2000-01-07T12:00:00-05:00"
+                assert day['endTime'] == "2000-01-07T20:00:00-05:00"
+            else:
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                              if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
+                assert day['startTime'] == parsed_day['startTime']
+                assert day['endTime'] == parsed_day['endTime']

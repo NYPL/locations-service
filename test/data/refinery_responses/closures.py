@@ -30,7 +30,7 @@ extended_closure_overlapping = [
 
 temp_closure_overlapping = [{
     "applies": {
-        "start": "2000-01-05T10:00:00-05:00",
+        "start": "2000-01-04T20:00:00-05:00",
         "end": "2000-01-05T14:00:00-05:00"
     }
 },
@@ -45,7 +45,7 @@ temp_closure_overlapping = [{
 extended_closure_into_late_opening = [{
     "applies": {
         "start": "2000-01-05T18:00:00-05:00",
-        "end": "2024-01-07T12:00:00-05:00"
+        "end": "2000-01-07T12:00:00-05:00"
     }
 }]
 
