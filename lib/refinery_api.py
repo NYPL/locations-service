@@ -141,10 +141,11 @@ def build_hours_array(days_array, today, alerts=[]):
     return days_with_timestamp
 
 
-def update_times(day_start_string, day_end_string, alert_start_string, alert_end_string):
+def update_times(day_start_string, day_end_string,
+                 alert_start_string, alert_end_string):
     """
-    Given iso-formatted strings representing regular scheduled opening and 
-    closing times ('day_start' and 'day_end' strings), and the end and start 
+    Given iso-formatted strings representing regular scheduled opening and
+    closing times ('day_start' and 'day_end' strings), and the end and start
     times of a closure alert, update the day start and end strings to account
     for any overlapping/relevant closure alerts.
     """

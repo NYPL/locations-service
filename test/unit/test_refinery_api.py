@@ -8,7 +8,9 @@ from lib.refinery_api import build_timestamp, get_refinery_data,\
     fetch_location_data, build_hours_array
 from test.unit.test_helpers import TestHelpers
 from test.data.refinery_responses.closures import \
-    extended_closure_long, early_closure, delayed_opening, extended_closure_into_late_opening, extended_closure_short, temp_closure_overlapping
+    extended_closure_long, early_closure, delayed_opening,\
+    extended_closure_into_late_opening, extended_closure_short,\
+    temp_closure_overlapping
 
 
 DAYS = [
