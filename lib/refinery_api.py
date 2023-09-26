@@ -149,6 +149,7 @@ def update_times(day_start_string, day_end_string,
     times of a closure alert, update the day start and end strings to account
     for any overlapping/relevant closure alerts.
     """
+    # If branch is regularly scheduled to be closed
     if day_start_string is None and day_end_string is None:
         return (day_start_string, day_end_string)
     # Convert to object so we can math!
