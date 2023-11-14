@@ -4,12 +4,12 @@ import os
 from freezegun import freeze_time
 from unittest.mock import patch
 
-from lib.refinery_api import build_timestamp, get_refinery_data,\
+from lib.refinery_api import build_timestamp, get_refinery_data, \
     fetch_location_data, build_hours_array
 from test.unit.test_helpers import TestHelpers
 from test.data.refinery_responses.closures import \
-    extended_closure_long, early_closure, delayed_opening,\
-    extended_closure_into_late_opening, extended_closure_short,\
+    extended_closure_long, early_closure, delayed_opening, \
+    extended_closure_into_late_opening, extended_closure_short, \
     temp_closure_overlapping
 
 
@@ -256,6 +256,26 @@ between 64th and 65th)',
     def test_apply_alerts_extended_closure_late_opening(self):
         hours = DAYS.copy()
         date = datetime(2000, 1, 1, tzinfo=timezone(-timedelta(hours=5)))
+        alerts_added_days = build_hours_array(
+            hours, date, extended_closure_into_late_opening)
+        for day in alerts_added_days:
+            if day['day'] == 'Thursday':
+                assert day['startTime'] is day['endTime'] is None
+            elif day['day'] == 'Friday':
+                assert day['startTime'] == "2000-01-07T12:00:00-05:00"
+                assert day['endTime'] == "2000-01-07T20:00:00-05:00"
+            else:
+                parsed_day = [pday for pday in PARSED_HOURS_ARRAY
+                              if pday['day'] == day['day']][0]
+                # The rest of the days should be unchanged
+                assert day['startTime'] == parsed_day['startTime']
+                assert day['endTime'] == parsed_day['endTime']
+
+    def test_apply_alerts_uses_minutes_from_refinery_api(self):
+        hours = DAYS.copy()
+        # datetime with non zero minutes
+        date = datetime(2000, 1, 1, 12, 22,
+                        tzinfo=timezone(-timedelta(hours=5)))
         alerts_added_days = build_hours_array(
             hours, date, extended_closure_into_late_opening)
         for day in alerts_added_days:
