@@ -99,7 +99,8 @@ def build_timestamp(time, day):
     # extract 12 from '12:00'
     hour = int(time.split(':')[0])
     minute = int(time.split(':')[1])
-    return day.replace(hour=hour, minute=minute).isoformat()
+    return day.replace(
+        hour=hour, minute=minute, second=0, microsecond=0).isoformat()
 
 
 # refinery day is one element of the hours array returned by Refinery API
