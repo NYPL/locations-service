@@ -1,7 +1,7 @@
 
 class ParamError(Exception):
-    def __init__(self):
-        self.message = 'No location codes provided'
+    def __init__(self, message='No location codes provided'):
+        self.message = message
 
 
 class MissingEnvVar(Exception):
