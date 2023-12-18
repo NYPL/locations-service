@@ -78,7 +78,7 @@ def check_cache_and_or_fetch_data(location):
 
 def determine_location(code):
     location = None
-    if code.startswith('ma'):
+    if code.startswith('ma') or code == 'rc':
         location = 'schwarzman'
     elif code.startswith('sc'):
         location = 'schomburg'
