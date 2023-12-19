@@ -7,6 +7,7 @@ from requests.exceptions import JSONDecodeError, RequestException
 
 from lib.logger import GlobalLogger
 from lib.errors import RefineryApiError
+from lib.rc_alerts import RCAlerts
 
 
 GlobalLogger.initialize_logger(__name__)
@@ -60,6 +61,8 @@ def get_refinery_data(code, fields):
         alerts = location_data.get('_embedded', {}).get('alerts')
         closure_alerts = [alert for alert in alerts
                           if alert.get('applies') is not None]
+        if code == 'rc':
+            closure_alerts = RCAlerts.get_alerts()
         data['hours'] = build_hours_array(
             location_data.get('hours').get('regular'),
             datetime.datetime.now().astimezone(), closure_alerts)

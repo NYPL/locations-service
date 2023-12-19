@@ -66,7 +66,6 @@ def build_location_info(location_code, fields):
             code = location_code
             url = s3_url
     refinery_data = get_refinery_data(location_code, fields)
-    print('refinery data: ', refinery_data)
     # original implementation of this code returned an array of multiple codes
     # which the front end would then filter through. We now only return one,
     # correct location, but it has to be in an array due to original contract.
