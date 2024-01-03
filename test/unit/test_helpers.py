@@ -10,7 +10,8 @@ class TestHelpers:
         'NYPL_CORE_OBJECTS_BASE_URL': 'https://example.com/',
         'S3_BUCKET': 'bucket',
         'S3_LOCATIONS_FILE': 'file',
-        'REFINERY_API_BASE_URL': 'https://refineryapi.net/'
+        'REFINERY_API_BASE_URL': 'https://refineryapi.net/',
+        'RC_ALERTS_URL': 'https://www.fake_rc_alerts.com'
     }
 
     @classmethod
