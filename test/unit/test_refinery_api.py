@@ -154,6 +154,38 @@ class TestRefineryApi:
         # cached data was accessed so only 1 api call
         assert requests_mock.call_count == 1
 
+    @freeze_time(datetime(2000, 1, 1))
+    def test_get_refinery_data_rc(self, requests_mock):
+        requests_mock.get(os.environ['REFINERY_API_BASE_URL'] +
+                          'schwarzman',
+                          json=TestRefineryApi
+                            .fetch_data_success('schwarzman'))
+        requests_mock.get(os.environ['RC_ALERTS_URL'],
+                          text='start_date,end_date\n2000-01-03,2000-01-03\n')
+        data = get_refinery_data(
+            'rc', ['location', 'hours'])
+        assert data.get('hours') == \
+            [{'day': 'Monday', 'startTime': None,
+                'endTime': None},
+                {'day': 'Tuesday', 'startTime': '2000-01-04T10:00:00-05:00',
+                 'endTime': '2000-01-04T20:00:00-05:00'},
+                {'day': 'Wednesday', 'startTime': '2000-01-05T10:00:00-05:00',
+                 'endTime': '2000-01-05T20:00:00-05:00'},
+                {'day': 'Thursday', 'startTime': '2000-01-06T10:00:00-05:00',
+                 'endTime': '2000-01-06T18:00:00-05:00'},
+                {'day': 'Friday', 'startTime': '2000-01-07T10:00:00-05:00',
+                 'endTime': '2000-01-07T18:00:00-05:00'},
+                {'day': 'Saturday', 'startTime': '2000-01-01T10:00:00-05:00',
+                 'endTime': '2000-01-01T18:00:00-05:00', 'today': True},
+                {'day': 'Sunday', 'startTime': None, 'endTime': None,
+                 'nextBusinessDay': True}]
+
+        assert data.get('location') == \
+            {'city': 'New York',
+                'line1': 'Fifth Avenue and 42nd Street',
+                'postal_code': '10018',
+                'state': 'NY'}
+
     def test_get_refinery_data_invalidate_cache(self, requests_mock):
         requests_mock.get(
             os.environ['REFINERY_API_BASE_URL'] + 'lpa',
