@@ -49,7 +49,7 @@ def build_location_info(location_code, fields):
         nypl_core_location_data = (lib.nypl_core
                                       .sierra_location_by_code(location_code))
     else:
-        nypl_core_location_data = { 'label': 'ReCAP' }
+        nypl_core_location_data = {'label': 'ReCAP'}
 
     if nypl_core_location_data is None:
         GlobalLogger.logger.error(

@@ -186,7 +186,6 @@ class TestRefineryApi:
                 'postal_code': '10018',
                 'state': 'NY'}
 
-
     def test_get_refinery_data_invalidate_cache(self, requests_mock):
         requests_mock.get(
             os.environ['REFINERY_API_BASE_URL'] + 'lpa',
