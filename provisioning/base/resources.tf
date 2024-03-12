@@ -44,6 +44,7 @@ resource "aws_lambda_function" "lambda_instance" {
   environment {
     variables = {
       ENVIRONMENT = var.environment
+      # In order to calculate correct offsets, we need to set the default time zone at deploy time or else AWS will ignore it:
       TZ = "America/New_York"
     }
   }
