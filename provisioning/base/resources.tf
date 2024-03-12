@@ -44,6 +44,7 @@ resource "aws_lambda_function" "lambda_instance" {
   environment {
     variables = {
       ENVIRONMENT = var.environment
+      TZ = "America/New_York"
     }
   }
 }
