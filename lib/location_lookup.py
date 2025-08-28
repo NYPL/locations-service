@@ -9,6 +9,7 @@ import lib.nypl_core
 from lib.logger import GlobalLogger
 from lib.errors import MissingEnvVar
 from lib.refinery_api import get_refinery_data
+from lib.location_api import get_location_data
 
 
 @cache
@@ -65,7 +66,7 @@ def build_location_info(location_code, fields):
             # TODO: remove dependency on code property in DFE
             code = location_code
             url = s3_url
-    refinery_data = get_refinery_data(location_code, fields)
+    refinery_data = get_location_data(location_code, fields)
     # original implementation of this code returned an array of multiple codes
     # which the front end would then filter through. We now only return one,
     # correct location, but it has to be in an array due to original contract.
