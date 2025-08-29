@@ -1,5 +1,4 @@
 import requests
-import json
 import os
 import datetime
 
@@ -9,7 +8,6 @@ from requests.exceptions import JSONDecodeError, RequestException
 
 from lib.logger import GlobalLogger
 from lib.errors import RefineryApiError
-from lib.rc_alerts import RCAlerts
 
 
 GlobalLogger.initialize_logger(__name__)
@@ -25,11 +23,12 @@ INTEGER_DAYS = {
     "SUNDAY": 6
 }
 
+
 @cache
 def get_location_by_code(code):
     try:
         response = requests.get(
-            os.environ['DRUPAL_API_BASE_URL'] + '?filter[field_ts_location_code]=' + code
+            f"{os.environ['DRUPAL_API_BASE_URL']}?filter[field_ts_location_code]={code}"
         )
         response.raise_for_status()
         response = response.json()
@@ -39,7 +38,7 @@ def get_location_by_code(code):
     except RequestException as e:
         raise RefineryApiError(
             f'Failed to retrieve Drupal API location data \
-            for {location}: {e}')
+            for {code}: {e}')
     except (JSONDecodeError, KeyError) as e:
         raise RefineryApiError(
             f'Failed to parse Drupal API response: \
@@ -54,7 +53,8 @@ def parse_address(address_data):
         'postal_code': address_data.get('postal_code', '')
     }
 
-def datetime_from_hours_string(base_date:datetime, hours_string: str):
+
+def datetime_from_hours_string(base_date: datetime, hours_string: str):
     # given a base date, turn a string like 10 AM into a datetime
     hour_and_time_of_day = hours_string.split(' ')
     hour = int(hour_and_time_of_day[0])
@@ -64,6 +64,7 @@ def datetime_from_hours_string(base_date:datetime, hours_string: str):
     if time_of_day.lower() == 'am' and hour == 12:
         hour = 0
     return base_date.replace(hour=hour).isoformat()
+
 
 def parse_hours(current_date: datetime, date):
     # parse hours in the form
@@ -121,7 +122,11 @@ def get_location_data(code, fields):
     if 'hours' in fields:
         # If upcoming_hours exists, use that, otherwise use regular_hours
         location_hours = location_data.get('location_hours')
-        upcoming_hours = location_hours.get('upcoming_hours') if location_hours.get('upcoming_hours') else location_hours.get('regular_hours')
+        upcoming_hours = (
+                location_hours.get('upcoming_hours')
+                if location_hours.get('upcoming_hours')
+                else location_hours.get('regular_hours')
+        )
         data['hours'] = []
         current_date = datetime.datetime.now().astimezone().replace(hour=0, minute=0, second=0, microsecond=0)
         today_index = 0

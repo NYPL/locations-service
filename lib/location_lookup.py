@@ -8,7 +8,6 @@ from nypl_py_utils.classes.s3_client import S3Client
 import lib.nypl_core
 from lib.logger import GlobalLogger
 from lib.errors import MissingEnvVar
-from lib.refinery_api import get_refinery_data
 from lib.location_api import get_location_data
 
 

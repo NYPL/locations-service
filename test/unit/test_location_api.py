@@ -1,11 +1,11 @@
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
 import json
 import os
 from freezegun import freeze_time
-from unittest.mock import patch
 
 from lib.location_api import parse_hours, parse_address, get_location_data
 from test.unit.test_helpers import TestHelpers
+
 
 class TestLocationApi:
 
@@ -28,11 +28,11 @@ class TestLocationApi:
             return json.load(file)
 
     def test_parse_hours(self):
-        monday =     {
+        monday = {
             "day": "Monday",
             "hours": "10 AM–6 PM"
         }
-        current_date = datetime(2000, 1, 1).astimezone() # this is a saturday
+        current_date = datetime(2000, 1, 1).astimezone()  # this is a saturday
         parsed = parse_hours(current_date, monday)
         assert parsed['day'] == 'Monday'
         assert parsed['startTime'] == '2000-01-03T10:00:00-05:00'
@@ -43,7 +43,7 @@ class TestLocationApi:
             "day": "Saturday",
             "hours": "10 AM–6 PM"
         }
-        current_date = datetime(2000, 1, 1).astimezone() # this is a saturday
+        current_date = datetime(2000, 1, 1).astimezone()  # this is a saturday
         parsed = parse_hours(current_date, day)
         assert parsed['day'] == 'Saturday'
         assert parsed['startTime'] == '2000-01-01T10:00:00-05:00'
@@ -55,7 +55,7 @@ class TestLocationApi:
             "day": "Saturday",
             "hours": "12 AM–12 PM"
         }
-        current_date = datetime(2000, 1, 1).astimezone() # this is a saturday
+        current_date = datetime(2000, 1, 1).astimezone()  # this is a saturday
         parsed = parse_hours(current_date, day)
         assert parsed['day'] == 'Saturday'
         assert parsed['startTime'] == '2000-01-01T00:00:00-05:00'
@@ -67,7 +67,7 @@ class TestLocationApi:
             "day": "Saturday",
             "hours": "12 PM–8 PM"
         }
-        current_date = datetime(2000, 1, 1).astimezone() # this is a saturday
+        current_date = datetime(2000, 1, 1).astimezone()  # this is a saturday
         parsed = parse_hours(current_date, day)
         assert parsed['day'] == 'Saturday'
         assert parsed['startTime'] == '2000-01-01T12:00:00-05:00'
