@@ -32,7 +32,7 @@ def get_location_by_code(code):
         )
         response.raise_for_status()
         response = response.json()
-        if not response.get('data'):
+        if not response.get('data') or not isinstance(response.get('data'), list):
             return None
         return response.get('data')[0].get('attributes', None)
     except RequestException as e:
