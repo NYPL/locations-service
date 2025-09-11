@@ -11,6 +11,7 @@ class TestHelpers:
         'S3_BUCKET': 'bucket',
         'S3_LOCATIONS_FILE': 'file',
         'REFINERY_API_BASE_URL': 'https://refineryapi.net/',
+        'DRUPAL_API_BASE_URL': 'https://drupalapi.net/',
         'RC_ALERTS_URL': 'https://www.fake_rc_alerts.com'
     }
 
