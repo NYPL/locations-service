@@ -49,7 +49,6 @@ class TestLocationApi:
         assert parsed['startTime'] == '2000-01-03T10:23:00-05:00'
         assert parsed['endTime'] == '2000-01-03T18:17:00-05:00'
 
-
     def test_parse_hours_today(self):
         day = {
             "day": "Saturday",

@@ -61,7 +61,7 @@ def datetime_from_hours_string(base_date: datetime, hours_string: str):
     hour = int(hour_and_minute[0])
     minute = 0
     if len(hour_and_minute) > 1:
-        minute = int(hour_and_minute[1]) 
+        minute = int(hour_and_minute[1])
     time_of_day = hour_and_time_of_day[1]
     if time_of_day.lower() == 'pm' and hour != 12:
         hour += 12
