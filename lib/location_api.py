@@ -57,13 +57,17 @@ def parse_address(address_data):
 def datetime_from_hours_string(base_date: datetime, hours_string: str):
     # given a base date, turn a string like 10 AM into a datetime
     hour_and_time_of_day = hours_string.split(' ')
-    hour = int(hour_and_time_of_day[0])
+    hour_and_minute = hour_and_time_of_day[0].split(':')
+    hour = int(hour_and_minute[0])
+    minute = 0
+    if len(hour_and_minute) > 1:
+        minute = int(hour_and_minute[1])
     time_of_day = hour_and_time_of_day[1]
     if time_of_day.lower() == 'pm' and hour != 12:
         hour += 12
     if time_of_day.lower() == 'am' and hour == 12:
         hour = 0
-    return base_date.replace(hour=hour).isoformat()
+    return base_date.replace(hour=hour, minute=minute).isoformat()
 
 
 def parse_hours(current_date: datetime, date):
@@ -114,14 +118,25 @@ def parse_hours(current_date: datetime, date):
 # by those fields for that location code.
 def get_location_data(code, fields):
     data = {}
-    location_data = check_cache_and_or_fetch_data(code)
+
+    # some codes require a parent location to fetch hours and address data, e.g. anything starting with 'ma' is SASB
+    location_code = code
+    if code.startswith('ma') or code == 'rc':
+        location_code = 'ma'
+    elif code.startswith('sc'):
+        location_code = 'sc'
+    elif code.startswith('pa'):
+        location_code = 'lpa'
+    logger.info(f'Getting {fields} data for location {location_code} for location code {code}')
+
+    location_data = check_cache_and_or_fetch_data(location_code)
     if location_data is None:
         return None
     if 'location' in fields:
         data['location'] = parse_address(location_data.get('field_as_address', {}))
     if 'hours' in fields:
-        # If upcoming_hours exists, use that, otherwise use regular_hours
         location_hours = location_data.get('location_hours')
+        # If upcoming_hours exists, use that, otherwise use regular_hours
         upcoming_hours = (
                 location_hours.get('upcoming_hours')
                 if location_hours.get('upcoming_hours')

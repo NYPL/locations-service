@@ -38,6 +38,17 @@ class TestLocationApi:
         assert parsed['startTime'] == '2000-01-03T10:00:00-05:00'
         assert parsed['endTime'] == '2000-01-03T18:00:00-05:00'
 
+    def test_parse_hours_with_minutes(self):
+        monday = {
+            "day": "Monday",
+            "hours": "10:23 AM–6:17 PM"
+        }
+        current_date = datetime(2000, 1, 1).astimezone()  # this is a saturday
+        parsed = parse_hours(current_date, monday)
+        assert parsed['day'] == 'Monday'
+        assert parsed['startTime'] == '2000-01-03T10:23:00-05:00'
+        assert parsed['endTime'] == '2000-01-03T18:17:00-05:00'
+
     def test_parse_hours_today(self):
         day = {
             "day": "Saturday",
