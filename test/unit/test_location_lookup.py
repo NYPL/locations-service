@@ -9,7 +9,7 @@ s3_locations = {'lo*': 'url.com',
                 'sc*': 'schom.com',
                 'my*': 'lpa.com'}
 
-refinery_data = {
+location_data = {
     'hours': 'some hours',
     'location': 'a location'
 }
@@ -26,7 +26,7 @@ class TestLocationLogic:
         TestHelpers.clear_env_vars()
         TestHelpers.tear_down()
 
-    @patch('lib.location_lookup.get_refinery_data', return_value=refinery_data)
+    @patch('lib.location_lookup.get_location_data', return_value=location_data)
     @patch('lib.location_lookup.check_cache_or_fetch_s3',
            return_value=s3_locations)
     @patch('lib.nypl_core.sierra_location_by_code',
@@ -40,7 +40,7 @@ class TestLocationLogic:
         assert build_location_info('xma99', ['location']) \
             == [{'code': None, 'label': 'label', 'location': 'a location'}]
 
-    @patch('lib.location_lookup.get_refinery_data', return_value=refinery_data)
+    @patch('lib.location_lookup.get_location_data', return_value=location_data)
     @patch('lib.location_lookup.check_cache_or_fetch_s3',
            return_value=s3_locations)
     @patch('lib.nypl_core.sierra_location_by_code',
@@ -74,7 +74,7 @@ class TestLocationLogic:
                 }]
         }
 
-    @patch('lib.location_lookup.get_refinery_data', return_value=refinery_data)
+    @patch('lib.location_lookup.get_location_data', return_value=location_data)
     @patch('lib.location_lookup.check_cache_or_fetch_s3',
            return_value=s3_locations)
     @patch('lib.nypl_core.sierra_location_by_code',
@@ -107,7 +107,7 @@ class TestLocationLogic:
                 }]
         }
 
-    @patch('lib.location_lookup.get_refinery_data', return_value=refinery_data)
+    @patch('lib.location_lookup.get_location_data', return_value=location_data)
     @patch('lib.location_lookup.check_cache_or_fetch_s3',
            return_value=s3_locations)
     @patch('lib.nypl_core.sierra_location_by_code',

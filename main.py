@@ -35,8 +35,8 @@ def handler(event, context):
             return create_response(400,
                                    'No location codes provided')
         except Exception as e:
-            logger.warn(f'Received error in fetch_locations_and_respond. \
-Message: {e}')
+            logger.error(f'Received error in fetch_locations_and_respond. \
+Message: {e}', e)
             return create_response(500,
                                    f'Failed to fetch locations \
 {location_codes} by code')
