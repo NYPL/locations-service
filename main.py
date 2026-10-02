@@ -75,8 +75,8 @@ def load_swagger_docs():
     except json.JSONDecodeError as e:
         logger.error('Failed to parse Swagger documentation')
         logger.debug(e.message)
-        create_response(500, 'Unable to load Swagger docs from JSON')
+        return create_response(500, 'Unable to load Swagger docs from JSON')
     except IOError as e:
         logger.error('Unable to load swagger documentation from file')
         logger.debug(e.message)
-        create_response(500, 'Unable to load Swagger docs from JSON')
+        return create_response(500, 'Unable to load Swagger docs from JSON')
