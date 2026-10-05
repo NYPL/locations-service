@@ -13,6 +13,5 @@ terraform {
 
 module "base" {
   source = "../base"
-
   environment = "qa"
 }

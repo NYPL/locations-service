@@ -5,6 +5,11 @@ __pycache__/
 *env/
 
 build/
-.terraform*
 
 build.toml
+
+
+# Terraform
+.terraform*
+*.hcl
+*.tfstate
