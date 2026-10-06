@@ -12,6 +12,7 @@ pip install \
 cp *.py build/.
 cp -R lib build/.
 cp -R config build/.
+cp swagger.json build/.
 
 cd build/
 zip -qr build.zip *
